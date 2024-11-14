@@ -8,7 +8,6 @@
     android:background="@color/white"
     tools:context=".LoginActivity">
 
-    <!-- Welcome Text -->
     <TextView
         android:id="@+id/tv_welcome"
         android:layout_width="wrap_content"
@@ -23,7 +22,6 @@
         app:layout_constraintBottom_toTopOf="@id/username_layout"
         android:layout_marginTop="50dp"/>
 
-    <!-- Subtitle Text -->
     <TextView
         android:id="@+id/tv_subtitle"
         android:layout_width="wrap_content"
@@ -36,7 +34,6 @@
         app:layout_constraintEnd_toEndOf="@id/tv_welcome"
         android:layout_marginTop="10dp"/>
 
-    <!-- Username Input -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/username_layout"
         android:layout_width="0dp"
@@ -63,7 +60,6 @@
             android:fontFamily="@font/poppins_reguler"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Password Input -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password_layout"
         android:layout_width="0dp"

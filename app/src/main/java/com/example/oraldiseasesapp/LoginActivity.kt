@@ -29,10 +29,8 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
 
-        // Configure Google Sign-In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -40,14 +38,12 @@ class LoginActivity : AppCompatActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        // Set up the sign-in button listener
         binding.buttonGoogleSignin.setOnClickListener {
             signInWithGoogle()
         }
     }
 
     private fun signInWithGoogle() {
-        // Launch Google Sign-In intent
         val signInIntent = googleSignInClient.signInIntent
         launcher.launch(signInIntent)
     }
