@@ -68,6 +68,8 @@ dependencies {
     // Firebase
     implementation("com.google.firebase:firebase-auth:23.1.0")
     implementation("com.google.android.gms:play-services-auth:21.2.0")
+
+    // Circle Image
     implementation ("de.hdodenhof:circleimageview:3.1.0")
 
     // Gemini
@@ -86,4 +88,13 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.12.0")
+
+    // Picaso
+    implementation ("com.squareup.picasso:picasso:2.71828")
+
+    //CameraX
+    val cameraxVersion = "1.3.0-alpha04"
+    implementation("androidx.camera:camera-camera2:$cameraxVersion")
+    implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
+    implementation("androidx.camera:camera-view:$cameraxVersion")
 }

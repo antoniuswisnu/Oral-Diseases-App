@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/username_layout"
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="76dp"/>
 
     <TextView
         android:id="@+id/tv_subtitle"
@@ -94,7 +94,7 @@
         app:cardCornerRadius="14dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="26dp"
         android:layout_marginBottom="20dp"
         android:elevation="6dp"
         android:translationZ="6dp"
@@ -102,22 +102,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/button_google_signin"
+        <LinearLayout
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Continue with Google"
-            android:fontFamily="@font/poppins_reguler"
-            android:textColor="#212121"
-            android:paddingVertical="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="center_vertical"
-        android:layout_alignParentBottom="true"
-        android:drawableLeft="@drawable/google_icon"
-        android:drawablePadding="8dp"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp" />
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/button_google_signin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Continue with Google"
+                android:fontFamily="@font/poppins_reguler"
+                android:textColor="#212121"
+                android:paddingVertical="12dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_vertical"
+                android:layout_alignParentBottom="true"
+                android:drawableLeft="@drawable/google_icon"
+                android:drawablePadding="8dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp" />
+
+        </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.button.MaterialButton

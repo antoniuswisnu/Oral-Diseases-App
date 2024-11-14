@@ -1,9 +1,14 @@
 package com.example.oraldiseasesapp
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import com.example.oraldiseasesapp.camera.CameraActivity
 import com.example.oraldiseasesapp.chat.ChatRouteActivity
 import com.example.oraldiseasesapp.data.DatabaseHelper
 import com.example.oraldiseasesapp.databinding.ActivityMainBinding
@@ -17,6 +22,21 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityMainBinding
     private lateinit var dbHelper: DatabaseHelper
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show()
+                openCamera()
+            } else {
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+            }
+        }
+    private fun allPermissionsGranted() =
+        ContextCompat.checkSelfPermission(
+            this,
+            android.Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,5 +81,19 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.cardMouth.setOnClickListener {
+            if (!allPermissionsGranted()) {
+                requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+            } else {
+                openCamera()
+            }
+        }
+
     }
+
+    private fun openCamera() {
+        val intentCameraX = Intent(this, CameraActivity::class.java)
+        startActivity(intentCameraX)
+    }
+
 }
