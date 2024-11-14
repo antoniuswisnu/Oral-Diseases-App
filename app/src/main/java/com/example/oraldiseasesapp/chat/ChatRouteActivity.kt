@@ -1,12 +1,9 @@
 package com.example.oraldiseasesapp.chat
 
 import android.os.Bundle
-import android.widget.EditText
-import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.oraldiseasesapp.databinding.ActivityChatRouteBinding
 
 class ChatRouteActivity : AppCompatActivity() {
