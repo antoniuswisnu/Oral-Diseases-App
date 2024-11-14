@@ -1,6 +1,9 @@
+import org.jetbrains.kotlin.storage.CacheResetOnProcessCanceled.enabled
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -15,7 +18,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
+        buildConfigField("String", "API_KEY", "\"${System.getenv("API_KEY_ENV") ?: ""}\"")
         buildConfigField(
             "String",
             "GOOGLE_API_KEY",
@@ -55,12 +58,17 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
+    
     implementation(libs.lottie)
     implementation(libs.androidx.viewPager2)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
+    
+    // Firebase
+    implementation("com.google.firebase:firebase-auth:23.1.0")
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
 
     // Gemini
     implementation("com.google.ai.client.generativeai:generativeai:0.7.0")

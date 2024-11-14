@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "932268467826",
+    "project_id": "oral-diseases-59196",
+    "storage_bucket": "oral-diseases-59196.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:932268467826:android:17981286af6ec437c504eb",
+        "android_client_info": {
+          "package_name": "com.example.oraldiseasesapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "932268467826-alnl19pt4em6i4nd0hmsb2gde787brn8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.oraldiseasesapp",
+            "certificate_hash": "e40f8437dc304d0ac683667e2c946cd2f0b0ae87"
+          }
+        },
+        {
+          "client_id": "932268467826-39pjfjp7fhntf4do7gvbcnthao6jms07.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuiDtddgd4Ro0GxuMSvT76Ds_g5b2ukCc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "932268467826-39pjfjp7fhntf4do7gvbcnthao6jms07.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
