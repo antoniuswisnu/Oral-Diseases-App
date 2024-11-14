@@ -13,12 +13,17 @@ android {
     defaultConfig {
         applicationId = "com.example.oraldiseasesapp"
         minSdk = 25
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "API_KEY", "\"${System.getenv("API_KEY_ENV") ?: ""}\"")
+        buildConfigField(
+            "String",
+            "GOOGLE_API_KEY",
+            "\"${project.findProperty("GOOGLE_API_KEY")}\""
+        )
     }
 
     buildTypes {
@@ -37,7 +42,6 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-
     buildFeatures {
         viewBinding = true
         buildConfig = true
@@ -54,7 +58,32 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    
+    implementation(libs.lottie)
+    implementation(libs.androidx.viewPager2)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    
+    // Firebase
     implementation("com.google.firebase:firebase-auth:23.1.0")
     implementation("com.google.android.gms:play-services-auth:21.2.0")
     implementation ("de.hdodenhof:circleimageview:3.1.0")
+
+    // Gemini
+    implementation("com.google.ai.client.generativeai:generativeai:0.7.0")
+
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+
+    // Youtube
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.1")
+
+    // Cardview
+    implementation("androidx.cardview:cardview:1.0.0")
+
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.12.0")
 }
