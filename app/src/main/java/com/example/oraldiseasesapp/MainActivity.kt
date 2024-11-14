@@ -4,16 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.example.oraldiseasesapp.chat.ChatRouteActivity
+import com.example.oraldiseasesapp.data.DatabaseHelper
 import com.example.oraldiseasesapp.databinding.ActivityMainBinding
+import com.example.oraldiseasesapp.login.LoginActivity
+import com.example.oraldiseasesapp.profile.ProfileActivity
+import com.example.oraldiseasesapp.video.ListVideoActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityMainBinding
+    private lateinit var dbHelper: DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,27 +25,41 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
+        dbHelper = DatabaseHelper(this)
+
+        val sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE)
+        val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
 
         val currentUser = auth.currentUser
-        if (currentUser == null) {
+        val dbUser = dbHelper.getCurrentUser()
+
+        // logic masih coba"
+        if (currentUser != null || isLoggedIn) {
+            val displayName = currentUser?.displayName
+            binding.tvUsername.text = displayName ?: "Firebase User"
+        } else if (dbUser != null) {
+            val displayName = dbUser.username
+            binding.tvUsername.text = displayName
+        } else {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
-        } else {
-//            val email = currentUser.email
-            val displayName = currentUser.displayName
-            binding.tvUsername.text = "$displayName"
-
-            binding.logoutBtn.setOnClickListener {
-                auth.signOut()
-                val googleSignInClient = GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN)
-                googleSignInClient.signOut().addOnCompleteListener {
-                    val logoutIntent = Intent(this, LoginActivity::class.java)
-                    logoutIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(logoutIntent)
-                    finish()
-                }
-            }
         }
+
+        binding.vids.setOnClickListener {
+            val intent = Intent(this, ListVideoActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.chatbot.setOnClickListener {
+            val intent = Intent(this, ChatRouteActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.profileImage.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 }

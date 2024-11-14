@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.oraldiseasesapp.login.LoginActivity
 import com.example.oraldiseasesapp.data.DatabaseHelper
 import com.example.oraldiseasesapp.databinding.ActivityRegisterBinding
 
@@ -30,7 +31,7 @@ class RegisterActivity : AppCompatActivity() {
                 } else {
                     if (dbHelper.registerUser(username, password)) {
                         Toast.makeText(this, "Registrasi berhasil", Toast.LENGTH_SHORT).show()
-//                        startActivity(Intent(this, LoginActivity::class.java))
+                        startActivity(Intent(this, LoginActivity::class.java))
                     } else {
                         Toast.makeText(this, "Registrasi gagal", Toast.LENGTH_SHORT).show()
                     }
@@ -40,8 +41,8 @@ class RegisterActivity : AppCompatActivity() {
             }
 
             binding.sudahPunyaAkunTextView.setOnClickListener {
-//                val loginIntent = Intent(this, LoginActivity::class.java)
-//                startActivity(loginIntent)
+                val loginIntent = Intent(this, LoginActivity::class.java)
+                startActivity(loginIntent)
             }
         }
     }

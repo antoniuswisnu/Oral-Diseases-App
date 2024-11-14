@@ -10,51 +10,17 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:padding="16dp"
-        android:gravity="center"
-        android:id="@+id/layout_notif"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:src="@drawable/logo" />
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
-<!--        <ImageView-->
-<!--            android:id="@+id/notif"-->
-<!--            android:layout_width="36dp"-->
-<!--            android:layout_height="36dp"-->
-<!--            android:src="@drawable/notif" />-->
-        <Button
-            android:id="@+id/logout_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Logout"
-            />
-
-    </LinearLayout>
-    <LinearLayout
         android:id="@+id/user_profile"
-        android:layout_marginTop="42dp"
-        app:layout_constraintTop_toBottomOf="@id/layout_notif"
-        app:layout_constraintStart_toStartOf="@id/layout_notif"
-        app:layout_constraintEnd_toEndOf="@id/layout_notif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profile_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -62,48 +28,48 @@
             android:src="@drawable/profile" />
 
         <LinearLayout
-            android:layout_weight="8"
-            android:layout_marginLeft="8dp"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="8"
             android:orientation="vertical">
 
             <TextView
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
                 android:id="@+id/tv_welcome"
-                android:text="Hi, Welcome!"
-                android:fontFamily="@font/poppins_bold"
-                android:textColor="#4A628A"
-                android:gravity="center"
-                android:textSize="16sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:text="Hi, Welcome!"
+                android:textColor="#4A628A"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
                 android:id="@+id/tv_username"
-                android:text="Sayanggg"
-                android:fontFamily="@font/poppins_reguler"
-                android:textColor="#4A628A"
-                android:gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_reguler"
+                android:gravity="center"
+                android:text="Sayanggg"
+                android:textColor="#4A628A"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </LinearLayout>
 
         <ImageView
-            android:layout_marginEnd="6dp"
-            android:layout_weight="1"
             android:id="@+id/setting_img"
             android:layout_width="36dp"
             android:layout_height="36dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
             android:src="@drawable/mynaui_config" />
 
     </LinearLayout>
@@ -113,7 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="18dp"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="28dp"
         android:layout_marginHorizontal="12dp"
         app:layout_constraintTop_toBottomOf="@id/user_profile"
         app:layout_constraintStart_toStartOf="parent"
@@ -345,6 +311,7 @@
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/chatbot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

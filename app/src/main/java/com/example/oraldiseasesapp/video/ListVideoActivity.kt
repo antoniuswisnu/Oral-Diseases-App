@@ -25,11 +25,5 @@ class ListVideoActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.rvVideo.adapter = adapter
-
-        binding.test.setOnClickListener {
-            val intent = Intent(this, ChatRouteActivity::class.java)
-            startActivity(intent)
-
-        }
     }
 }

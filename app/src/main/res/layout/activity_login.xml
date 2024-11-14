@@ -6,9 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".LoginActivity">
+    tools:context=".login.LoginActivity">
 
-    <!-- Welcome Text -->
     <TextView
         android:id="@+id/tv_welcome"
         android:layout_width="wrap_content"
@@ -23,7 +22,6 @@
         app:layout_constraintBottom_toTopOf="@id/username_layout"
         android:layout_marginTop="50dp"/>
 
-    <!-- Subtitle Text -->
     <TextView
         android:id="@+id/tv_subtitle"
         android:layout_width="wrap_content"
@@ -36,7 +34,6 @@
         app:layout_constraintEnd_toEndOf="@id/tv_welcome"
         android:layout_marginTop="10dp"/>
 
-    <!-- Username Input -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/username_layout"
         android:layout_width="0dp"
@@ -63,7 +60,6 @@
             android:fontFamily="@font/poppins_reguler"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Password Input -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password_layout"
         android:layout_width="0dp"
@@ -124,9 +120,6 @@
         android:paddingEnd="24dp" />
     </androidx.cardview.widget.CardView>
 
-
-
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_signin"
         android:layout_width="0dp"
@@ -144,16 +137,30 @@
         android:layout_marginEnd="40dp"/>
 
     <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/poppins_reguler"
+        android:text="@string/register_text"
+        android:textColor="#212121"
+        android:layout_marginEnd="40dp"
+        app:layout_constraintEnd_toEndOf="@id/button_signin"
+        app:layout_constraintStart_toStartOf="@id/button_signin"
+        app:layout_constraintTop_toBottomOf="@id/button_signin" />
+
+    <TextView
         android:id="@+id/tv_regis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/register_text"
-        android:fontFamily="@font/poppins_reguler"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Register"
         android:textColor="#212121"
-        app:layout_constraintTop_toBottomOf="@id/button_signin"
-        app:layout_constraintStart_toStartOf="@id/button_signin"
-        app:layout_constraintEnd_toEndOf="@id/button_signin"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/button_signin" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -1,5 +1,6 @@
 package com.example.oraldiseasesapp.data
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -30,8 +31,6 @@ class DatabaseHelper(context: Context) :
         onCreate(db)
     }
 
-
-
     fun registerUser(username: String, password: String): Boolean {
         val db = this.writableDatabase
         val values = ContentValues()
@@ -52,5 +51,26 @@ class DatabaseHelper(context: Context) :
         return exists
     }
 
+    fun logOutUser(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+    }
 
+    @SuppressLint("Range")
+    fun getCurrentUser(): User? {
+        val db = this.readableDatabase
+        val query = "SELECT * FROM users"
+        val cursor = db.rawQuery(query, null)
+        var user: User? = null
+        if (cursor.moveToFirst()) {
+            val username = cursor.getString(cursor.getColumnIndex(COLUMN_USERNAME))
+            val password = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD))
+            user = User(username, password)
+        }
+        cursor.close()
+        db.close()
+        return user
+    }
 }

@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
+import com.example.oraldiseasesapp.MainActivity
 import com.example.oraldiseasesapp.R
 import com.example.oraldiseasesapp.databinding.ActivityOnBoardingBinding
 import com.example.oraldiseasesapp.video.ListVideoActivity
@@ -58,7 +59,7 @@ class OnBoardingActivity : AppCompatActivity() {
             if (binding.onboardingViewPager.currentItem + 1 < onboardingAdapter.itemCount) {
                 binding.onboardingViewPager.currentItem += binding.onboardingViewPager.currentItem
             } else {
-                val intent = Intent(this, ListVideoActivity::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             }
         }
