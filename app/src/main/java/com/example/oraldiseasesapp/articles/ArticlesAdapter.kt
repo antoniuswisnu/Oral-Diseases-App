@@ -1,5 +1,6 @@
 package com.example.oraldiseasesapp.articles
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,12 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.oraldiseasesapp.R
 
-class ArticlesAdapter(private val articles: List<ArticlesData>, private val onItemClicked: (ArticlesData) -> Unit) :
+class ArticlesAdapter(private var articles: List<ArticlesData>, private val onItemClicked: (ArticlesData) -> Unit) :
     RecyclerView.Adapter<ArticlesAdapter.ArticlesViewHolder>() {
 
     inner class ArticlesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val title = view.findViewById<TextView>(R.id.newsTitle)
-        val description = view.findViewById<TextView>(R.id.newsDescription)
+        val title: TextView = view.findViewById<TextView>(R.id.newsTitle)
+        val description: TextView = view.findViewById<TextView>(R.id.newsDescription)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticlesViewHolder {
@@ -25,7 +26,16 @@ class ArticlesAdapter(private val articles: List<ArticlesData>, private val onIt
         holder.title.text = article.title
         holder.description.text = article.description
         holder.itemView.setOnClickListener { onItemClicked(article) }
+
+        Log.d("test", article.toString())
+        Log.d("test", article.title)
     }
 
     override fun getItemCount() = articles.size
+
+
+    fun updateArticles(newArticles: List<ArticlesData>) {
+        articles = newArticles
+        notifyDataSetChanged()
+    }
 }

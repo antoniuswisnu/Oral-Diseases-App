@@ -20,6 +20,12 @@
         android:theme="@style/Theme.OralDiseasesApp"
         tools:targetApi="31">
         <activity
+            android:name=".news.NewsDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".news.ListNewsActivity"
+            android:exported="false" />
+        <activity
             android:name=".chatbot.data.ChatBotActivity"
             android:exported="false" />
         <activity

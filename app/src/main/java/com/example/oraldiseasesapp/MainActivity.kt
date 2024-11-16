@@ -5,13 +5,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.example.oraldiseasesapp.chat.ChatRouteActivity
+import com.example.oraldiseasesapp.articles.ListArticlesActivity
 import com.example.oraldiseasesapp.chatbot.data.ChatBotActivity
 import com.example.oraldiseasesapp.data.DatabaseHelper
 import com.example.oraldiseasesapp.databinding.ActivityMainBinding
-import com.example.oraldiseasesapp.login.LoginActivity
+import com.example.oraldiseasesapp.news.ListNewsActivity
 import com.example.oraldiseasesapp.predict.PreviewActivity
-import com.example.oraldiseasesapp.predict.result.PredictActivity
 import com.example.oraldiseasesapp.profile.ProfileActivity
 import com.example.oraldiseasesapp.tootpaste.ToothpasteActivity
 import com.example.oraldiseasesapp.video.ListVideoActivity
@@ -32,13 +31,9 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         dbHelper = DatabaseHelper(this)
 
-        val sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE)
-        val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
-
         val currentUser = auth.currentUser
         val dbUser = dbHelper.getCurrentUser()
 
-        // logic masih coba"
         if (currentUser != null) {
             val displayName = currentUser.displayName
             binding.tvUsername.text = displayName ?: "Firebase User"
@@ -68,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.pods.setOnClickListener {
-            Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, ListArticlesActivity::class.java))
         }
 
         binding.stats.setOnClickListener {
@@ -76,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.articles.setOnClickListener {
-            Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, ListNewsActivity::class.java))
         }
 
         binding.cardTooth.setOnClickListener {

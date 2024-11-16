@@ -62,10 +62,8 @@ class LoginActivity : AppCompatActivity() {
                 val isValidUser = dbHelper.loginUser(username, password)
                 if (isValidUser) {
                     Toast.makeText(this, "Login berhasil", Toast.LENGTH_SHORT).show()
-                    val mainIntent = Intent(this, OnBoardingActivity::class.java).apply{
-                        putExtra("name", username)
-                    }
-                    startActivity(mainIntent)
+                    val intent = Intent(this, OnBoardingActivity::class.java)
+                    startActivity(intent)
                     finish()
                 } else {
                     Toast.makeText(this, "Username atau password salah", Toast.LENGTH_SHORT).show()

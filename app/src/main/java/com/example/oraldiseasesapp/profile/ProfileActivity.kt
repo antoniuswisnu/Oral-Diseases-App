@@ -24,15 +24,15 @@ class ProfileActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         dbHelper = DatabaseHelper(this)
+        val dbUser = dbHelper.getCurrentUser()
 
         val currentUser = auth.currentUser
         if (currentUser != null) {
             val displayName = currentUser.displayName
             binding.tvName.text = "$displayName"
         } else {
-            val sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE)
-            val username = sharedPreferences.getString("username", "")
-            binding.tvName.text = username
+            val displayName = dbUser?.username
+            binding.tvName.text = displayName
         }
 
         binding.backButton.setOnClickListener {

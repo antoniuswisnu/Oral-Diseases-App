@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.oraldiseasesapp.news.ApiException
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,7 +29,13 @@ class ArticlesRepository(private val apiKey: String) {
             override fun onResponse(call: Call<ArticlesResponse>, response: Response<ArticlesResponse>) {
                 if (response.isSuccessful) {
                     data.value = response.body()?.articles
+                } else{
+                    throw ApiException(response.code(), response.message())
                 }
+                Log.d("ArticlesRepository", response.code().toString())
+                Log.d("ArticlesRepository", response.message().toString())
+                Log.d("ArticlesRepository", response.body().toString())
+
             }
             override fun onFailure(call: Call<ArticlesResponse>, t: Throwable) {
                 Log.d("ArticlesRepository", "Failed to get top headlines", t)

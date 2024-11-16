@@ -13,9 +13,12 @@ class ArticlesActivity : AppCompatActivity() {
         binding = ActivityArticlesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val article: ArticlesData = intent.getSerializableExtra("article") as ArticlesData
-//        val article = intent.getParcelableExtra<ArticlesData>("article")
-        binding.articlesDetailTitle.text = article.title
-        binding.articlesDetailContent.text = article.content
+        val article = intent.getSerializableExtra("article") as? ArticlesData
+        if (article != null) {
+            binding.articlesDetailTitle.text = article.title
+            binding.articlesDetailContent.text = article.content
+        } else {
+            // Handle the case where article is null
+        }
     }
 }
