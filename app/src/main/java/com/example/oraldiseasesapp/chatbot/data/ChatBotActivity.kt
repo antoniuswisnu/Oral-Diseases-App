@@ -83,8 +83,7 @@ class ChatBotActivity : AppCompatActivity() {
 
         val body = RequestBody.create(JSON, jsonBody.toString())
         val request = Request.Builder()
-            .url("https://chatbot-api-rhl.vercel.app/api/chat")
-            .header("Authorization", "Bearer ${BuildConfig.API_KEY}")
+            .url("https://chat-bot-api-x8v2.vercel.app/api/chat")
             .post(body)
             .build()
 
