@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_reguler"
                 android:gravity="center"
-                android:text="Sayanggg"
+                android:text=""
                 android:textColor="#4A628A"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -299,7 +299,6 @@
         />
 
     <androidx.cardview.widget.CardView
-        app:layout_constraintBottom_toTopOf="@id/card_tooth"
         android:id="@+id/card_chatbot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -308,6 +307,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_desc_feat"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="18dp"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -358,7 +358,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="20dp"
         android:id="@+id/card_tooth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -401,19 +401,15 @@
             <TextView
                 android:id="@+id/tv_tooth_desc"
                 android:layout_marginRight="20dp"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
                 android:fontFamily="@font/poppins_reguler"
-                android:layout_marginVertical="10dp"
                 android:text="Choose the one that’s right for you"
                 android:textColor="#4A628A"
                 android:textSize="12sp"
-                android:layout_marginTop="12dp"
-                app:layout_constraintEnd_toEndOf="@id/tv_tooth"
-                app:layout_constraintStart_toEndOf="@id/tooth_img"
                 app:layout_constraintTop_toBottomOf="@id/tv_tooth"
-                app:layout_constraintBottom_toBottomOf="@id/tooth_img"
+                app:layout_constraintStart_toStartOf="@id/tv_tooth"
+                android:paddingBottom="8dp"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

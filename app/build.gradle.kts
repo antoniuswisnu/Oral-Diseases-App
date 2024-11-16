@@ -50,6 +50,7 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        mlModelBinding = true
     }
 }
 
@@ -60,6 +61,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.tensorflow.lite.support)
+    implementation(libs.tensorflow.lite.metadata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -73,6 +76,8 @@ dependencies {
     // Firebase
     implementation("com.google.firebase:firebase-auth:23.1.0")
     implementation("com.google.android.gms:play-services-auth:21.2.0")
+
+    // Circle Image
     implementation ("de.hdodenhof:circleimageview:3.1.0")
 
     // Gemini
@@ -91,4 +96,19 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.12.0")
+
+    // Picaso
+    implementation ("com.squareup.picasso:picasso:2.71828")
+
+    //CameraX
+    val cameraxVersion = "1.3.0-alpha04"
+    implementation("androidx.camera:camera-camera2:$cameraxVersion")
+    implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
+    implementation("androidx.camera:camera-view:$cameraxVersion")
+
+    // TensorFlow Lite
+    implementation ("org.tensorflow:tensorflow-lite:2.13.0")
+
+    // TensorFlow Lite Support Library
+    implementation ("org.tensorflow:tensorflow-lite-support:0.4.3")
 }

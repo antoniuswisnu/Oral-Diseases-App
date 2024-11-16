@@ -1,14 +1,19 @@
 package com.example.oraldiseasesapp
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import com.example.oraldiseasesapp.camera.CameraActivity
 import com.example.oraldiseasesapp.chat.ChatRouteActivity
 import com.example.oraldiseasesapp.data.DatabaseHelper
 import com.example.oraldiseasesapp.databinding.ActivityMainBinding
 import com.example.oraldiseasesapp.login.LoginActivity
+import com.example.oraldiseasesapp.predict.PreviewActivity
 import com.example.oraldiseasesapp.profile.ProfileActivity
 import com.example.oraldiseasesapp.tootpaste.ToothpasteActivity
 import com.example.oraldiseasesapp.video.ListVideoActivity
@@ -63,6 +68,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.cardMouth.setOnClickListener {
+            val intent = Intent(this, PreviewActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.pods.setOnClickListener {
             Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show()
         }
@@ -81,4 +91,5 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
 }
