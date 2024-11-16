@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.oraldiseasesapp.chat.ChatRouteActivity
+import com.example.oraldiseasesapp.chatbot.data.ChatBotActivity
 import com.example.oraldiseasesapp.data.DatabaseHelper
 import com.example.oraldiseasesapp.databinding.ActivityMainBinding
 import com.example.oraldiseasesapp.login.LoginActivity
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.chatbot.setOnClickListener {
-            val intent = Intent(this, ChatRouteActivity::class.java)
+            val intent = Intent(this, ChatBotActivity::class.java)
             startActivity(intent)
         }
 
