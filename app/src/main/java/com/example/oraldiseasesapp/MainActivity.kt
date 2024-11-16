@@ -13,6 +13,7 @@ import com.example.oraldiseasesapp.chat.ChatRouteActivity
 import com.example.oraldiseasesapp.data.DatabaseHelper
 import com.example.oraldiseasesapp.databinding.ActivityMainBinding
 import com.example.oraldiseasesapp.login.LoginActivity
+import com.example.oraldiseasesapp.predict.PreviewActivity
 import com.example.oraldiseasesapp.profile.ProfileActivity
 import com.example.oraldiseasesapp.video.ListVideoActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -22,21 +23,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityMainBinding
     private lateinit var dbHelper: DatabaseHelper
-
-    private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            if (isGranted) {
-                Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show()
-                openCamera()
-            } else {
-                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
-            }
-        }
-    private fun allPermissionsGranted() =
-        ContextCompat.checkSelfPermission(
-            this,
-            android.Manifest.permission.CAMERA
-        ) == PackageManager.PERMISSION_GRANTED
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,18 +68,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.cardMouth.setOnClickListener {
-            if (!allPermissionsGranted()) {
-                requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
-            } else {
-                openCamera()
-            }
+            val intent = Intent(this, PreviewActivity::class.java)
+            startActivity(intent)
         }
 
-    }
-
-    private fun openCamera() {
-        val intentCameraX = Intent(this, CameraActivity::class.java)
-        startActivity(intentCameraX)
     }
 
 }

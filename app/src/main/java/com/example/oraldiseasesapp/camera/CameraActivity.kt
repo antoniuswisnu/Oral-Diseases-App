@@ -1,109 +1,162 @@
 package com.example.oraldiseasesapp.camera
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.OrientationEventListener
+import android.view.Surface
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.*
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import com.example.oraldiseasesapp.R
+import androidx.core.net.toUri
 import com.example.oraldiseasesapp.databinding.ActivityCameraBinding
-import java.io.File
-import java.text.SimpleDateFormat
+import com.example.oraldiseasesapp.predict.createCustomTempFile
 import java.util.*
 
 class CameraActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityCameraBinding
-    private lateinit var cameraExecutor: java.util.concurrent.Executor
-    private lateinit var imageCapture: ImageCapture
-    private lateinit var cameraProvider: ProcessCameraProvider
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-
-    private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        uri?.let {
-            Toast.makeText(this, "Image selected", Toast.LENGTH_SHORT).show()
-        }
-    }
+    private var imageCapture: ImageCapture? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        cameraExecutor = ContextCompat.getMainExecutor(this)
-        startCamera()
-
-        binding.captureImage.setOnClickListener {
-            takePhoto()
-        }
-
         binding.switchCamra.setOnClickListener {
-            toggleCamera()
+            cameraSelector =
+                if (cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) CameraSelector.DEFAULT_FRONT_CAMERA
+                else CameraSelector.DEFAULT_BACK_CAMERA
+            startCamera()
         }
+        binding.captureImage.setOnClickListener { takePhoto() }
+    }
 
-        binding.viewFinder.setOnClickListener {
-            pickImage.launch("image/*")
-        }
+    public override fun onResume() {
+        super.onResume()
+        hideSystemUI()
+        startCamera()
     }
 
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
-        cameraProviderFuture.addListener({
-            cameraProvider = cameraProviderFuture.get()
 
-            val preview = Preview.Builder().build().also {
-                it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
-            }
+        cameraProviderFuture.addListener({
+            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+            val preview = Preview.Builder()
+                .build()
+                .also {
+                    it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
+                }
 
             imageCapture = ImageCapture.Builder().build()
 
             try {
                 cameraProvider.unbindAll()
-
                 cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview, imageCapture
+                    this,
+                    cameraSelector,
+                    preview,
+                    imageCapture
                 )
+
             } catch (exc: Exception) {
-                Toast.makeText(this, "Camera initialization failed.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@CameraActivity,
+                    "Gagal memunculkan kamera.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                Log.e(TAG, "startCamera: ${exc.message}")
             }
         }, ContextCompat.getMainExecutor(this))
     }
 
     private fun takePhoto() {
-        val photoFile = File(externalCacheDir, SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis()) + ".jpg")
+        val imageCapture = imageCapture ?: return
+
+        val photoFile = createCustomTempFile(application)
+
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
 
-        imageCapture.takePicture(outputOptions, cameraExecutor, object : ImageCapture.OnImageSavedCallback {
-            override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                val savedUri = outputFileResults.savedUri
+        imageCapture.takePicture(
+            outputOptions,
+            ContextCompat.getMainExecutor(this),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                    val savedUri = photoFile.toUri()
+                    val intent = Intent()
+                    intent.putExtra(EXTRA_CAMERAX_IMAGE, savedUri.toString())
+                    setResult(CAMERAX_RESULT, intent)
+                    finish()
+                }
 
-                val mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
-                mediaScanIntent.data = savedUri
-                sendBroadcast(mediaScanIntent)
-
-                Toast.makeText(this@CameraActivity, "Photo saved: $savedUri", Toast.LENGTH_SHORT).show()
+                override fun onError(exc: ImageCaptureException) {
+                    Toast.makeText(
+                        this@CameraActivity,
+                        "Failed to capture image.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    Log.e(TAG, "onError: ${exc.message}")
+                }
             }
-
-            override fun onError(exception: ImageCaptureException) {
-                Toast.makeText(this@CameraActivity, "Error taking photo: ${exception.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
+        )
     }
 
 
-    private fun toggleCamera() {
-        cameraSelector = if (cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) {
-            CameraSelector.DEFAULT_FRONT_CAMERA
+    private fun hideSystemUI() {
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
         } else {
-            CameraSelector.DEFAULT_BACK_CAMERA
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
         }
-        startCamera()
+        supportActionBar?.hide()
+    }
+
+    private val orientationEventListener by lazy {
+        object : OrientationEventListener(this) {
+            override fun onOrientationChanged(orientation: Int) {
+                if (orientation == ORIENTATION_UNKNOWN) {
+                    return
+                }
+
+                val rotation = when (orientation) {
+                    in 45 until 135 -> Surface.ROTATION_270
+                    in 135 until 225 -> Surface.ROTATION_180
+                    in 225 until 315 -> Surface.ROTATION_90
+                    else -> Surface.ROTATION_0
+                }
+
+                imageCapture?.targetRotation = rotation
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        orientationEventListener.enable()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        orientationEventListener.disable()
     }
 
     companion object {
-        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
+        private const val TAG = "CameraActivity"
+        const val EXTRA_CAMERAX_IMAGE = "CameraX Image"
+        const val CAMERAX_RESULT = 200
     }
 }
