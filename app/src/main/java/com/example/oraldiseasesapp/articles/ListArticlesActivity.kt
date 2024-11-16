@@ -18,13 +18,13 @@ class ListArticlesActivity : AppCompatActivity() {
         binding = ActivityListArticlesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ArticlesViewModel(BuildConfig.NEWS_API_KEY)
+//        viewModel = ArticlesViewModel(BuildConfig.NEWS_API_KEY)
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
 
         viewModel.articles.observe(this) { articles ->
-            adapter = ArticlesAdapter(articles) { article ->
+            adapter = ArticlesAdapter(articles) {
                 val intent = Intent(this, ArticlesActivity::class.java)
-                intent.putExtra("article", article)
+//                intent.putExtra("article", article)
                 startActivity(intent)
             }
             recyclerView.adapter = adapter
