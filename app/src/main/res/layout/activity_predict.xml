@@ -48,8 +48,7 @@
         <ImageView
             android:id="@+id/previewImageView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
+            android:layout_height="match_parent" />
 
     </androidx.cardview.widget.CardView>
 
@@ -92,6 +91,7 @@ Kondisi ini tidak boleh dianggap sepele begitu saja. Gingivitis yang tidak ditan
         android:layout_height="wrap_content">
 
         <Button
+            android:id="@+id/btn_try_again"
             android:backgroundTint="#4A628A"
             android:paddingVertical="16dp"
             android:textSize="18sp"
@@ -103,6 +103,7 @@ Kondisi ini tidak boleh dianggap sepele begitu saja. Gingivitis yang tidak ditan
             android:text="Try Again"/>
 
         <Button
+            android:id="@+id/btn_finish"
             android:paddingVertical="16dp"
             android:textSize="18sp"
             android:fontFamily="@font/poppins_bold"

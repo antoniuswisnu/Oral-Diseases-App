@@ -22,6 +22,7 @@ import com.example.oraldiseasesapp.camera.CameraActivity
 import com.example.oraldiseasesapp.camera.CameraActivity.Companion.CAMERAX_RESULT
 import com.example.oraldiseasesapp.databinding.ActivityPreviewBinding
 import com.example.oraldiseasesapp.ml.ModelNew
+import com.example.oraldiseasesapp.predict.result.PredictActivity
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.common.ops.NormalizeOp
 import org.tensorflow.lite.support.image.ImageProcessor
@@ -29,7 +30,6 @@ import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.image.ops.ResizeOp
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.nio.ByteBuffer
-import java.nio.ByteOrder
 
 class PreviewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPreviewBinding
@@ -94,10 +94,8 @@ class PreviewActivity : AppCompatActivity() {
         }
     }
 
-
     private fun uriToBitmap(uri: Uri): Bitmap? {
         return try {
-            // Mengambil bitmap asli dari URI
             val originalBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 val source = ImageDecoder.createSource(contentResolver, uri)
                 ImageDecoder.decodeBitmap(source)
@@ -105,16 +103,12 @@ class PreviewActivity : AppCompatActivity() {
                 @Suppress("DEPRECATION")
                 MediaStore.Images.Media.getBitmap(contentResolver, uri)
             }
-
-            val argbBitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true)
-
-            argbBitmap
+            originalBitmap.copy(Bitmap.Config.ARGB_8888, true)
         } catch (e: Exception) {
             e.printStackTrace()
             null
         }
     }
-
 
     private fun predictImage() {
         if (bitmap == null) {
@@ -125,16 +119,15 @@ class PreviewActivity : AppCompatActivity() {
         binding.progressIndicator.visibility = View.VISIBLE
 
         val tensorImage = preprocessImage(bitmap!!)
-        val byteBuffer = tensorImage.buffer
+        val inputBuffer = tensorImage.buffer
 
-        classifyImage(byteBuffer)
+        classifyImage(inputBuffer)
     }
 
     private fun preprocessImage(bitmap: Bitmap): TensorImage {
         val imageProcessor = ImageProcessor.Builder()
             .add(ResizeOp(299, 299, ResizeOp.ResizeMethod.BILINEAR))
-            .add(NormalizeOp(0f, 255f))
-            .add(NormalizeOp(floatArrayOf(0.485f, 0.456f, 0.406f), floatArrayOf(0.229f, 0.224f, 0.225f)))
+            .add(NormalizeOp(0.0f, 255.0f))
             .build()
 
         var tensorImage = TensorImage(DataType.FLOAT32)
@@ -144,44 +137,41 @@ class PreviewActivity : AppCompatActivity() {
         return tensorImage
     }
 
-
-    private fun classifyImage(byteBuffer: ByteBuffer) {
+    private fun classifyImage(inputBuffer: ByteBuffer) {
         val model = ModelNew.newInstance(applicationContext)
 
-        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 299, 299, 3), DataType.FLOAT32)
-        inputFeature0.loadBuffer(byteBuffer)
+        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 3, 299, 299), DataType.FLOAT32)
+        inputFeature0.loadBuffer(inputBuffer)
 
         val outputs = model.process(inputFeature0)
         val outputFeature0 = outputs.outputFeature0AsTensorBuffer
         val confidenceArray = outputFeature0.floatArray
 
+        // Daftar label
         val labels = arrayOf("Calculus", "Caries", "Gingivitis", "Ulcer", "Tooth Discoloration", "Hypodontia")
 
-        val maxIndex = getMaxIndex(confidenceArray)
-        val result = if (maxIndex != -1) labels[maxIndex] else "Undetected wound"
+        val maxIndex = confidenceArray.indices.maxByOrNull { confidenceArray[it] } ?: -1
+        val result = if (maxIndex >= 0) labels[maxIndex] else "Undetected wound"
 
-        Toast.makeText(this, "Prediction: $result", Toast.LENGTH_LONG).show()
-        Log.d("Prediction Result", result)
-        for (i in 0..10) {
-            Log.d("Debug", "Pixel value after normalization: ${byteBuffer.getFloat(i)}")
+
+//        Toast.makeText(this, "Prediction: $result", Toast.LENGTH_LONG).show()
+
+//        Log.d("Prediction Result", "Predicted label: $result")
+        for (i in confidenceArray.indices) {
+            Log.d("Confidence Score", "Label: ${labels[i]}, Confidence: ${confidenceArray[i]}")
         }
 
+        val intent = Intent(this, PredictActivity::class.java)
+        intent.putExtra("prediction_result", result)
+
+        currentImageUri?.let {
+            intent.putExtra("image_uri", it.toString())
+        }
+
+        startActivity(intent)
 
         model.close()
         binding.progressIndicator.visibility = View.GONE
     }
 
-
-    private fun getMaxIndex(arr: FloatArray): Int {
-        var maxIndex = 0
-        var maxValue = arr[0]
-
-        for (i in arr.indices) {
-            if (arr[i] > maxValue) {
-                maxValue = arr[i]
-                maxIndex = i
-            }
-        }
-        return maxIndex
-    }
 }
