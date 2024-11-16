@@ -3,6 +3,7 @@ package com.example.oraldiseasesapp.profile
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.oraldiseasesapp.MainActivity
 import com.example.oraldiseasesapp.data.DatabaseHelper
 import com.example.oraldiseasesapp.databinding.ActivityProfileBinding
 import com.example.oraldiseasesapp.login.LoginActivity
@@ -32,6 +33,11 @@ class ProfileActivity : AppCompatActivity() {
             val sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE)
             val username = sharedPreferences.getString("username", "")
             binding.tvName.text = username
+        }
+
+        binding.backButton.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
 
         binding.logoutBtn.setOnClickListener {

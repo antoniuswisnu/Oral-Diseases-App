@@ -26,7 +26,19 @@
             android:name=".predict.PreviewActivity"
             android:exported="false" />
         <activity
+            android:name=".tootpaste.DetailToothPasteActivity"
+            android:exported="false" />
+       <activity
             android:name=".camera.CameraActivity"
+            android:exported="false" />
+        <activity
+            android:name=".tootpaste.ToothpasteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".articles.ArticlesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".articles.ListArticlesActivity"
             android:exported="false" />
         <activity
             android:name=".profile.ProfileActivity"

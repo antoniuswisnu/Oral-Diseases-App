@@ -15,6 +15,7 @@ import com.example.oraldiseasesapp.databinding.ActivityMainBinding
 import com.example.oraldiseasesapp.login.LoginActivity
 import com.example.oraldiseasesapp.predict.PreviewActivity
 import com.example.oraldiseasesapp.profile.ProfileActivity
+import com.example.oraldiseasesapp.tootpaste.ToothpasteActivity
 import com.example.oraldiseasesapp.video.ListVideoActivity
 import com.google.firebase.auth.FirebaseAuth
 
@@ -69,6 +70,23 @@ class MainActivity : AppCompatActivity() {
 
         binding.cardMouth.setOnClickListener {
             val intent = Intent(this, PreviewActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.pods.setOnClickListener {
+            Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.stats.setOnClickListener {
+            Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.articles.setOnClickListener {
+            Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.cardTooth.setOnClickListener {
+            val intent = Intent(this, ToothpasteActivity::class.java)
             startActivity(intent)
         }
 

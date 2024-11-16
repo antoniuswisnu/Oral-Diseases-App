@@ -24,6 +24,11 @@ android {
             "GOOGLE_API_KEY",
             "\"${project.findProperty("GOOGLE_API_KEY")}\""
         )
+        buildConfigField(
+            "String",
+            "NEWS_API_KEY",
+            "\"${project.findProperty("NEWS_API_KEY")}\""
+        )
     }
 
     buildTypes {
