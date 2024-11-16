@@ -1,10 +1,12 @@
 package com.example.oraldiseasesapp.video
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.oraldiseasesapp.MainActivity
 import com.example.oraldiseasesapp.databinding.ActivityVideoBinding
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
@@ -54,5 +56,10 @@ class VideoActivity : AppCompatActivity() {
         })
 
         lifecycle.addObserver(binding.youTubePlayerView)
+
+        binding.backButton.setOnClickListener {
+            startActivity(Intent(this, ListVideoActivity::class.java))
+            finish()
+        }
     }
 }

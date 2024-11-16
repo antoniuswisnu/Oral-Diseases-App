@@ -2,6 +2,7 @@ package com.example.oraldiseasesapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.oraldiseasesapp.chat.ChatRouteActivity
@@ -59,6 +60,18 @@ class MainActivity : AppCompatActivity() {
         binding.profileImage.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.pods.setOnClickListener {
+            Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.stats.setOnClickListener {
+            Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.articles.setOnClickListener {
+            Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show()
         }
 
     }

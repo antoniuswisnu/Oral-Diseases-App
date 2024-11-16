@@ -1,5 +1,6 @@
 package com.example.oraldiseasesapp.chat
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
@@ -7,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.oraldiseasesapp.MainActivity
 import com.example.oraldiseasesapp.databinding.ActivityChatRouteBinding
 
 class ChatRouteActivity : AppCompatActivity() {
@@ -36,6 +38,11 @@ class ChatRouteActivity : AppCompatActivity() {
                 chatViewModel.sendMessage(message)
                 binding.messageInput.text.clear()
             }
+        }
+
+        binding.backButton.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
     }
 }
