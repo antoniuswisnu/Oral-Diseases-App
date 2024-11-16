@@ -78,11 +78,12 @@ class ChatBotActivity : AppCompatActivity() {
         }
 
         val JSON: MediaType? = "application/json; charset=utf-8".toMediaTypeOrNull()
+        val api_key = (getString(R.string.openapi_key))
 
         val body = RequestBody.create(JSON, jsonBody.toString())
         val request = Request.Builder()
             .url("https://chatbot-api-rhl.vercel.app/api/chat")
-            .header("Authorization", "Bearer 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")
+            .header("Authorization", "Bearer $api_key")
             .post(body)
             .build()
 
