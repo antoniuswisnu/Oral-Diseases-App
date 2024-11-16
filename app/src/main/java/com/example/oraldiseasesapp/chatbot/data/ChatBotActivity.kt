@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.oraldiseasesapp.BuildConfig
 import com.example.oraldiseasesapp.R
 import com.example.oraldiseasesapp.databinding.ActivityChatBotBinding
 import okhttp3.Call
@@ -78,12 +79,12 @@ class ChatBotActivity : AppCompatActivity() {
         }
 
         val JSON: MediaType? = "application/json; charset=utf-8".toMediaTypeOrNull()
-        val api_key = (getString(R.string.openapi_key))
+//        val api_key = (getString(R.string.openapi_key))
 
         val body = RequestBody.create(JSON, jsonBody.toString())
         val request = Request.Builder()
             .url("https://chatbot-api-rhl.vercel.app/api/chat")
-            .header("Authorization", "Bearer $api_key")
+            .header("Authorization", "Bearer ${BuildConfig.API_KEY}")
             .post(body)
             .build()
 
