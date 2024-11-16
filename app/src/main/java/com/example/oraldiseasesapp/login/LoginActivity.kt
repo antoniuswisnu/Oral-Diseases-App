@@ -100,7 +100,6 @@ class LoginActivity : AppCompatActivity() {
                 updateUI(account)
             }
         } else {
-            Log.d("LoginActivity", task.exception?.localizedMessage.toString())
             Toast.makeText(this, "Google Sign-In failed: ${task.exception?.localizedMessage}", Toast.LENGTH_SHORT).show()
         }
     }

@@ -1,19 +1,16 @@
 package com.example.oraldiseasesapp
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import com.example.oraldiseasesapp.camera.CameraActivity
 import com.example.oraldiseasesapp.chat.ChatRouteActivity
 import com.example.oraldiseasesapp.data.DatabaseHelper
 import com.example.oraldiseasesapp.databinding.ActivityMainBinding
 import com.example.oraldiseasesapp.login.LoginActivity
 import com.example.oraldiseasesapp.predict.PreviewActivity
+import com.example.oraldiseasesapp.predict.result.PredictActivity
 import com.example.oraldiseasesapp.profile.ProfileActivity
 import com.example.oraldiseasesapp.tootpaste.ToothpasteActivity
 import com.example.oraldiseasesapp.video.ListVideoActivity
@@ -41,16 +38,12 @@ class MainActivity : AppCompatActivity() {
         val dbUser = dbHelper.getCurrentUser()
 
         // logic masih coba"
-        if (currentUser != null || isLoggedIn) {
-            val displayName = currentUser?.displayName
+        if (currentUser != null) {
+            val displayName = currentUser.displayName
             binding.tvUsername.text = displayName ?: "Firebase User"
         } else if (dbUser != null) {
             val displayName = dbUser.username
             binding.tvUsername.text = displayName
-        } else {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
         }
 
         binding.vids.setOnClickListener {
@@ -91,5 +84,4 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
 }

@@ -24,7 +24,7 @@ class DetailToothPasteActivity : AppCompatActivity() {
         binding.detailImage.setImageResource(imageResId)
 
         binding.backButton.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, ToothpasteActivity::class.java))
             finish()
         }
     }

@@ -1,5 +1,6 @@
 package com.example.oraldiseasesapp.articles
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,7 +31,7 @@ class ArticlesRepository(private val apiKey: String) {
                 }
             }
             override fun onFailure(call: Call<ArticlesResponse>, t: Throwable) {
-                // Handle failure
+                Log.d("ArticlesRepository", "Failed to get top headlines", t)
             }
         })
         return data
