@@ -1,17 +1,11 @@
-package com.example.oraldiseasesapp.chatbot.data
+package com.example.oraldiseasesapp.chatbot
 
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.oraldiseasesapp.BuildConfig
-import com.example.oraldiseasesapp.R
 import com.example.oraldiseasesapp.databinding.ActivityChatBotBinding
 import okhttp3.Call
 import okhttp3.Callback

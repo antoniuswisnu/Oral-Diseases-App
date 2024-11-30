@@ -18,11 +18,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import com.example.oraldiseasesapp.camera.CameraActivity
 import com.example.oraldiseasesapp.camera.CameraActivity.Companion.CAMERAX_RESULT
+import com.example.oraldiseasesapp.data.AppDatabase
 import com.example.oraldiseasesapp.databinding.ActivityPreviewBinding
 import com.example.oraldiseasesapp.ml.ModelNew
-import com.example.oraldiseasesapp.predict.result.PredictActivity
+import com.example.oraldiseasesapp.report.Prediction
+import kotlinx.coroutines.launch
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.common.ops.NormalizeOp
 import org.tensorflow.lite.support.image.ImageProcessor
@@ -30,11 +33,25 @@ import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.image.ops.ResizeOp
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.nio.ByteBuffer
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class PreviewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPreviewBinding
     private var currentImageUri: Uri? = null
     private var bitmap: Bitmap? = null
+
+    private val listDesc = mapOf(
+        "Calculus" to "Kalkulus gigi adalah lapisan kotoran yang menempel dan mengeras pada permukaan gigi. Lapisan ini tidak bisa dibersihkan dengan cara disikat. Saat dipegang, kalkulus gigi terasa keras dan memiliki permukaan tidak rata layaknya karang. Karena itulah, kalkulus gigi juga kerap disebut dengan istilah karang gigi.",
+        "Caries" to "Karies gigi adalah masalah gigi berlubang, yaitu ketika gigi mengalami kerusakan serta pembusukan di bagian luar dan dalam. Kondisi ini merupakan permasalahan gigi yang dapat menyerang saraf, sering kali karies gigi disebabkan oleh aktivitas bakteri Streptococcus mutans di dalam mulut.",
+        "Gingivitis" to "Gingivitis adalah peradangan gusi yang disebabkan oleh penumpukan plak bakteri akibat kebersihan mulut yang buruk. Gejalanya meliputi gusi merah, bengkak, mudah berdarah saat menyikat gigi, serta bau mulut. Jika tidak ditangani, gingivitis bisa berkembang menjadi periodontitis, yang lebih serius dan dapat menyebabkan kerusakan jaringan pendukung gigi.",
+        "Ulcer" to "Ulcer dalam konteks kesehatan gigi merujuk pada ulser mulut atau sariawan, yang merupakan luka terbuka kecil di dalam mulut. Ulser ini biasanya berwarna putih atau kekuningan dengan pinggiran merah dan sering menyebabkan rasa sakit, terutama saat makan atau minum.",
+        "Tooth Discoloration" to "Tooth Discoloration adalah kondisi di mana warna gigi berubah dan tampak kuning, coklat, abu-abu, atau bahkan hitam. Penyebab utamanya termasuk kebiasaan merokok, konsumsi minuman berpigmen, serta kurangnya kebersihan mulut.",
+        "Hypodontia" to "Hypodontia adalah kondisi bawaan di mana seseorang memiliki jumlah gigi permanen yang kurang dari normal karena satu atau lebih gigi tidak berkembang. Ini sering terjadi pada gigi seri kedua atas atau gigi premolar kedua bawah."
+    )
+    private val predictionList = mutableListOf<Prediction>()
+
 
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
         if (!isGranted) {
@@ -147,16 +164,13 @@ class PreviewActivity : AppCompatActivity() {
         val outputFeature0 = outputs.outputFeature0AsTensorBuffer
         val confidenceArray = outputFeature0.floatArray
 
-        // Daftar label
         val labels = arrayOf("Calculus", "Caries", "Gingivitis", "Ulcer", "Tooth Discoloration", "Hypodontia")
-
         val maxIndex = confidenceArray.indices.maxByOrNull { confidenceArray[it] } ?: -1
         val result = if (maxIndex >= 0) labels[maxIndex] else "Undetected wound"
 
-
 //        Toast.makeText(this, "Prediction: $result", Toast.LENGTH_LONG).show()
 
-//        Log.d("Prediction Result", "Predicted label: $result")
+        Log.d("Prediction Result", "Predicted label: $result")
         for (i in confidenceArray.indices) {
             Log.d("Confidence Score", "Label: ${labels[i]}, Confidence: ${confidenceArray[i]}")
         }
@@ -167,6 +181,22 @@ class PreviewActivity : AppCompatActivity() {
         currentImageUri?.let {
             intent.putExtra("image_uri", it.toString())
         }
+
+        lifecycleScope.launch {
+            val database = AppDatabase.getInstance(applicationContext)
+            val dao = database.predictionDao()
+
+            val prediction = Prediction(
+                label = result,
+                confidence = confidenceArray[maxIndex],
+                description = listDesc[result] ?: "Deskripsi tidak tersedia.",
+                imageUri = currentImageUri?.toString()
+            )
+
+            dao.insert(prediction)
+            Toast.makeText(this@PreviewActivity, "Prediction saved to report", Toast.LENGTH_SHORT).show()
+        }
+
 
         startActivity(intent)
 

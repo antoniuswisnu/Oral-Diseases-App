@@ -1,4 +1,4 @@
-package com.example.oraldiseasesapp.chatbot.data
+package com.example.oraldiseasesapp.chatbot
 
 data class Message(val message: String, val sentBy: String) {
     companion object {

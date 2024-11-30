@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 interface NewsApiService {
     @GET("v2/top-headlines")
     suspend fun getTopHeadlines(
-        @Query("q") country: String = "teeth",
+        @Query("q") country: String = "medical",
         @Query("apiKey") apiKey: String = BuildConfig.NEWS_API_KEY
     ): Response<NewsResponse>
 }

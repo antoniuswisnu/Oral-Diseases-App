@@ -1,4 +1,4 @@
-package com.example.oraldiseasesapp.chatbot.data
+package com.example.oraldiseasesapp.chatbot
 
 import android.view.LayoutInflater
 import android.view.View

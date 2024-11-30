@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oraldiseasesapp.MainActivity
-import com.example.oraldiseasesapp.chat.ChatRouteActivity
 import com.example.oraldiseasesapp.databinding.ActivityListVideoBinding
 
 class ListVideoActivity : AppCompatActivity() {

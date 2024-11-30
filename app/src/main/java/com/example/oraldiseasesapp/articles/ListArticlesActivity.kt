@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oraldiseasesapp.BuildConfig
+import com.example.oraldiseasesapp.MainActivity
 import com.example.oraldiseasesapp.databinding.ActivityListArticlesBinding
 
 class ListArticlesActivity : AppCompatActivity() {
@@ -31,6 +32,11 @@ class ListArticlesActivity : AppCompatActivity() {
 
         viewModel.articles.observe(this) { articles ->
             adapter.updateArticles(articles)
+        }
+
+        binding.backButton.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
 
         Log.d("Articles", viewModel.toString())

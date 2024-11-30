@@ -1,7 +1,9 @@
 package com.example.oraldiseasesapp.profile
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.provider.Contacts.SettingsColumns.KEY
 import androidx.appcompat.app.AppCompatActivity
 import com.example.oraldiseasesapp.MainActivity
 import com.example.oraldiseasesapp.data.DatabaseHelper
@@ -11,11 +13,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 
+
 class ProfileActivity : AppCompatActivity() {
 
     private lateinit var dbHelper: DatabaseHelper
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityProfileBinding
+    private lateinit var mSharedPref: SharedPreferences
+    private var mLogin: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +45,9 @@ class ProfileActivity : AppCompatActivity() {
             finish()
         }
 
+        mSharedPref = getSharedPreferences("sharedPrefFile", MODE_PRIVATE)
+//        mLogin = mSharedPref.getBoolean(KEY, false);
+
         binding.logoutBtn.setOnClickListener {
             if (auth.currentUser != null) {
                 auth.signOut()
@@ -51,8 +59,9 @@ class ProfileActivity : AppCompatActivity() {
                     finish()
                 }
             } else {
-                val dbHelper = DatabaseHelper(this)
-                dbHelper.logOutUser(this)
+                val editor: SharedPreferences.Editor = mSharedPref.edit()
+                editor.putBoolean(KEY, false)
+                editor.apply()
                 val logoutIntent = Intent(this, LoginActivity::class.java)
                 logoutIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(logoutIntent)

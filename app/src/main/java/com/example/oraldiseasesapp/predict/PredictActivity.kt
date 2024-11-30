@@ -1,20 +1,14 @@
-package com.example.oraldiseasesapp.predict.result
+package com.example.oraldiseasesapp.predict
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.Preview
 import androidx.core.net.toUri
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.oraldiseasesapp.MainActivity
 import com.example.oraldiseasesapp.databinding.ActivityPredictBinding
-import com.example.oraldiseasesapp.login.LoginActivity
-import com.example.oraldiseasesapp.predict.PreviewActivity
 
 class PredictActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPredictBinding
@@ -32,11 +26,6 @@ class PredictActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityPredictBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
-        val predictedClass = intent.getStringExtra("predictedClass") ?: "Unknown"
-        val confidence = intent.getFloatExtra("confidence", 0f)
-        val imageUri = intent.getStringExtra("imageUri")
 
         displayPredictionResult()
 
@@ -66,7 +55,6 @@ class PredictActivity : AppCompatActivity() {
 
         if (imageUri != null) {
             try {
-//                val uri = Uri.parse(imageUri)
                 binding.previewImageView.setImageURI(imageUri)
             } catch (e: Exception) {
                 Log.e("PredictActivity", "Failed to load image: ${e.message}")

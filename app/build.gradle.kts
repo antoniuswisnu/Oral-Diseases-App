@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("com.google.gms.google-services")
     id("kotlin-parcelize")
+    id("org.jetbrains.kotlin.kapt")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -111,5 +113,11 @@ dependencies {
     implementation ("org.tensorflow:tensorflow-lite:2.13.0")
 
     // TensorFlow Lite Support Library
-    implementation ("org.tensorflow:tensorflow-lite-support:0.4.3")
+    implementation (libs.tensorflow.lite.support.v043)
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    kapt(libs.androidx.room.compiler)
+//    ksp(libs.androidx.room.compiler.v250)
 }

@@ -5,13 +5,13 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.example.oraldiseasesapp.articles.ListArticlesActivity
-import com.example.oraldiseasesapp.chatbot.data.ChatBotActivity
+import com.example.oraldiseasesapp.chatbot.ChatBotActivity
 import com.example.oraldiseasesapp.data.DatabaseHelper
 import com.example.oraldiseasesapp.databinding.ActivityMainBinding
 import com.example.oraldiseasesapp.news.ListNewsActivity
 import com.example.oraldiseasesapp.predict.PreviewActivity
 import com.example.oraldiseasesapp.profile.ProfileActivity
+import com.example.oraldiseasesapp.report.ReportActivity
 import com.example.oraldiseasesapp.tootpaste.ToothpasteActivity
 import com.example.oraldiseasesapp.video.ListVideoActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -63,11 +63,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.pods.setOnClickListener {
-            startActivity(Intent(this, ListArticlesActivity::class.java))
+            Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show()
         }
 
         binding.stats.setOnClickListener {
-            Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, ReportActivity::class.java))
         }
 
         binding.articles.setOnClickListener {

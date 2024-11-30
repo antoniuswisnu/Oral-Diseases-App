@@ -58,6 +58,11 @@ class DatabaseHelper(context: Context) :
         editor.apply()
     }
 
+    fun checkUserLoggedIn(context: Context): Boolean {
+        val sharedPreferences = context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
+        return sharedPreferences.contains("username")
+    }
+
     @SuppressLint("Range")
     fun getCurrentUser(): User? {
         val db = this.readableDatabase
