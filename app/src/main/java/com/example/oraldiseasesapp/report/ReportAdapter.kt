@@ -12,6 +12,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.oraldiseasesapp.databinding.ItemReportBinding
 
 class ReportAdapter(private var predictions: List<Prediction>) :
@@ -33,19 +34,9 @@ class ReportAdapter(private var predictions: List<Prediction>) :
             tvLabel.text = prediction.label
             tvConfidence.text = "${prediction.confidence}"
             tvDescription.text = prediction.description
-            prediction.imageUri?.let { imageUri ->
-                try {
-                    val inputStream = holder.itemView.context.contentResolver.openInputStream(Uri.parse(imageUri))
-                    val bitmap = BitmapFactory.decodeStream(inputStream)
-                    ivPreview.setImageBitmap(bitmap)
-                    inputStream?.close()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    Log.e("ReportAdapter", "Error loading image URI: $imageUri", e)
-                }
-            }
-            Log.d("ReportAdapter", "Binding data for position $position: $prediction")
-            Log.d("ReportAdapter", "Image URI: ${prediction.imageUri}")
+            Glide.with(holder.itemView.context)
+                .load(prediction.imageUri)
+                .into(ivPreview)
         }
     }
 

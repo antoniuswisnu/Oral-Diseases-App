@@ -37,5 +37,10 @@ class NewsDetailActivity : AppCompatActivity() {
             val shareIntent = Intent.createChooser(sendIntent, null)
             startActivity(shareIntent)
         }
+
+        binding.backButton.setOnClickListener {
+            startActivity(Intent(this, ListNewsActivity::class.java))
+            finish()
+        }
     }
 }

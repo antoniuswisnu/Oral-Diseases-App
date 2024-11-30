@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.oraldiseasesapp.MainActivity
 import com.example.oraldiseasesapp.databinding.ActivityListNewsBinding
 import kotlinx.coroutines.launch
 
@@ -32,6 +33,11 @@ class ListNewsActivity : AppCompatActivity() {
             })
             binding.recyclerView.adapter = adapter
 
+        }
+
+        binding.backButton.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
     }
 }
