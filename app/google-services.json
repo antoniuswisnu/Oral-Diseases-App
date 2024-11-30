@@ -14,14 +14,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "932268467826-alnl19pt4em6i4nd0hmsb2gde787brn8.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.oraldiseasesapp",
-            "certificate_hash": "e40f8437dc304d0ac683667e2c946cd2f0b0ae87"
-          }
-        },
-        {
           "client_id": "932268467826-39pjfjp7fhntf4do7gvbcnthao6jms07.apps.googleusercontent.com",
           "client_type": 3
         }

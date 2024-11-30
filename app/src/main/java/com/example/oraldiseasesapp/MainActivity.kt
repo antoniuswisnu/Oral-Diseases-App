@@ -35,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         dbHelper = DatabaseHelper(this)
 
+        checkIfUserIsLoggedIn()
+
         val sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE)
         val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
 
@@ -92,5 +94,36 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+    private fun checkIfUserIsLoggedIn() {
+        val sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE)
+        val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+
+        // Cek apakah pengguna login melalui Firebase
+        if (auth.currentUser != null) {
+            // Pengguna login melalui Firebase
+            val displayName = auth.currentUser?.displayName ?: "Firebase User"
+            binding.tvUsername.text = displayName
+        } else if (isLoggedIn) {
+            // Pengguna login melalui SQLite
+            val dbUser = dbHelper.getCurrentUser()
+            if (dbUser != null) {
+                binding.tvUsername.text = dbUser.username
+            } else {
+                // Pengguna tidak ditemukan di database, arahkan ke LoginActivity
+                navigateToLogin()
+            }
+        } else {
+            // Pengguna belum login, arahkan ke LoginActivity
+            navigateToLogin()
+        }
+    }
+
+    private fun navigateToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
 
 }

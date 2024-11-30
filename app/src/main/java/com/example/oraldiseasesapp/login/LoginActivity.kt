@@ -61,13 +61,17 @@ class LoginActivity : AppCompatActivity() {
             if (username.isNotEmpty() && password.isNotEmpty()) {
                 val isValidUser = dbHelper.loginUser(username, password)
                 if (isValidUser) {
+                    val sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE)
+                    sharedPreferences.edit().putBoolean("isLoggedIn", true).apply()
+
                     Toast.makeText(this, "Login berhasil", Toast.LENGTH_SHORT).show()
-                    val mainIntent = Intent(this, OnBoardingActivity::class.java).apply{
+                    val mainIntent = Intent(this, OnBoardingActivity::class.java).apply {
                         putExtra("name", username)
                     }
                     startActivity(mainIntent)
                     finish()
-                } else {
+                }
+                else {
                     Toast.makeText(this, "Username atau password salah", Toast.LENGTH_SHORT).show()
                 }
             } else {
@@ -97,27 +101,48 @@ class LoginActivity : AppCompatActivity() {
         if (task.isSuccessful) {
             val account = task.result
             if (account != null) {
+                Log.d("LoginActivity", "Google Sign-In successful. Account: ${account.email}")
                 updateUI(account)
+            } else {
+                Log.d("LoginActivity", "GoogleSignInAccount is null.")
+                Toast.makeText(this, "Google Sign-In account is null.", Toast.LENGTH_SHORT).show()
             }
         } else {
-            Log.d("LoginActivity", task.exception?.localizedMessage.toString())
+            Log.e("LoginActivity", "Google Sign-In failed: ${task.exception?.localizedMessage}")
+            task.exception?.printStackTrace()
             Toast.makeText(this, "Google Sign-In failed: ${task.exception?.localizedMessage}", Toast.LENGTH_SHORT).show()
         }
     }
 
+
     private fun updateUI(account: GoogleSignInAccount) {
-        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+        val idToken = account.idToken
+        if (idToken == null) {
+            Log.e("LoginActivity", "ID token is null. Cannot authenticate with Firebase.")
+            Toast.makeText(this, "ID token is null. Please try again.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        Log.d("LoginActivity", "ID Token: $idToken")
 
         auth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
+                Log.d("LoginActivity", "Firebase authentication successful.")
                 navigateToMain(account)
             } else {
+                Log.e("LoginActivity", "Firebase authentication failed: ${task.exception?.localizedMessage}")
+                task.exception?.printStackTrace()
                 Toast.makeText(this, "Authentication failed: ${task.exception?.localizedMessage}", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
+
     private fun navigateToMain(account: GoogleSignInAccount) {
+        val sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE)
+        sharedPreferences.edit().putBoolean("isLoggedIn", true).apply()
+
         val intent = Intent(this, OnBoardingActivity::class.java).apply {
             putExtra("email", account.email)
             putExtra("name", account.displayName)
@@ -125,4 +150,6 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
+
 }

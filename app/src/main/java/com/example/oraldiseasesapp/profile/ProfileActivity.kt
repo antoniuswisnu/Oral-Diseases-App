@@ -30,7 +30,7 @@ class ProfileActivity : AppCompatActivity() {
             val displayName = currentUser.displayName
             binding.tvName.text = "$displayName"
         } else {
-            val sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE)
+            val sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE)
             val username = sharedPreferences.getString("username", "")
             binding.tvName.text = username
         }
@@ -41,23 +41,54 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         binding.logoutBtn.setOnClickListener {
-            if (auth.currentUser != null) {
-                auth.signOut()
-                val googleSignInClient = GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN)
-                googleSignInClient.signOut().addOnCompleteListener {
-                    val logoutIntent = Intent(this, LoginActivity::class.java)
-                    logoutIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(logoutIntent)
-                    finish()
-                }
-            } else {
-                val dbHelper = DatabaseHelper(this)
-                dbHelper.logOutUser(this)
-                val logoutIntent = Intent(this, LoginActivity::class.java)
-                logoutIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(logoutIntent)
-                finish()
-            }
+//            if (auth.currentUser != null) {
+//                auth.signOut()
+//                val googleSignInClient = GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                googleSignInClient.signOut().addOnCompleteListener {
+//                    val logoutIntent = Intent(this, LoginActivity::class.java)
+//                    logoutIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                    startActivity(logoutIntent)
+//                    finish()
+//                }
+//            } else {
+//                val dbHelper = DatabaseHelper(this)
+//                dbHelper.logOutUser(this)
+//                val logoutIntent = Intent(this, LoginActivity::class.java)
+//                logoutIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                startActivity(logoutIntent)
+//                finish()
+//            }
+            logoutUser()
+
         }
+
+    }
+    private fun logoutUser() {
+        val sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE)
+
+        // Cek apakah pengguna login melalui Firebase
+        if (auth.currentUser != null) {
+            // Logout dari Firebase
+            auth.signOut()
+            val googleSignInClient = GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN)
+            googleSignInClient.signOut().addOnCompleteListener {
+                // Hapus data SharedPreferences
+                sharedPreferences.edit().clear().apply()
+                navigateToLogin()
+            }
+        } else {
+            // Logout dari SQLite
+            dbHelper.logOutUser(this)
+            // Hapus data SharedPreferences
+            sharedPreferences.edit().clear().apply()
+            navigateToLogin()
+        }
+    }
+
+    private fun navigateToLogin() {
+        val logoutIntent = Intent(this, LoginActivity::class.java)
+        logoutIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(logoutIntent)
+        finish()
     }
 }
