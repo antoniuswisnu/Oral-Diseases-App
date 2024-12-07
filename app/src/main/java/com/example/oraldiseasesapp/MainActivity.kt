@@ -1,16 +1,21 @@
 package com.example.oraldiseasesapp
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.oraldiseasesapp.camera.CameraActivity
 import com.example.oraldiseasesapp.chat.ChatRouteActivity
 import com.example.oraldiseasesapp.chatbot.data.ChatBotActivity
+import com.example.oraldiseasesapp.clinics.ClinicActivity
 import com.example.oraldiseasesapp.data.DatabaseHelper
 import com.example.oraldiseasesapp.databinding.ActivityMainBinding
 import com.example.oraldiseasesapp.login.LoginActivity
@@ -71,13 +76,14 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.cardMouth.setOnClickListener {
+        binding.btnScan.setOnClickListener {
             val intent = Intent(this, PreviewActivity::class.java)
             startActivity(intent)
         }
 
-        binding.pods.setOnClickListener {
-            Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show()
+        binding.clinics.setOnClickListener {
+            val intent = Intent(this, ClinicActivity::class.java)
+            startActivity(intent)
         }
 
         binding.stats.setOnClickListener {
@@ -99,22 +105,17 @@ class MainActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE)
         val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
 
-        // Cek apakah pengguna login melalui Firebase
         if (auth.currentUser != null) {
-            // Pengguna login melalui Firebase
             val displayName = auth.currentUser?.displayName ?: "Firebase User"
             binding.tvUsername.text = displayName
         } else if (isLoggedIn) {
-            // Pengguna login melalui SQLite
             val dbUser = dbHelper.getCurrentUser()
             if (dbUser != null) {
                 binding.tvUsername.text = dbUser.username
             } else {
-                // Pengguna tidak ditemukan di database, arahkan ke LoginActivity
                 navigateToLogin()
             }
         } else {
-            // Pengguna belum login, arahkan ke LoginActivity
             navigateToLogin()
         }
     }

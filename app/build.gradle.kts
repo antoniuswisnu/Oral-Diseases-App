@@ -111,4 +111,10 @@ dependencies {
 
     // TensorFlow Lite Support Library
     implementation ("org.tensorflow:tensorflow-lite-support:0.4.3")
+
+    implementation ("com.google.android.gms:play-services-maps:18.1.0")
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
+    implementation ("com.squareup.okhttp3:okhttp:4.11.0")
+
+
 }

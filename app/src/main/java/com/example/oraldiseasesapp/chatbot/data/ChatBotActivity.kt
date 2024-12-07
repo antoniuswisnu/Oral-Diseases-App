@@ -1,5 +1,6 @@
 package com.example.oraldiseasesapp.chatbot.data
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -11,8 +12,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oraldiseasesapp.BuildConfig
+import com.example.oraldiseasesapp.MainActivity
 import com.example.oraldiseasesapp.R
 import com.example.oraldiseasesapp.databinding.ActivityChatBotBinding
+import com.example.oraldiseasesapp.profile.ProfileActivity
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType
@@ -50,6 +53,12 @@ class ChatBotActivity : AppCompatActivity() {
             binding.etChatMessage.text.clear()
 //            binding.animationView.visibility = View.GONE
             callAPI(question)
+        }
+
+        binding.backButton.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         hideSystemUI()
