@@ -33,12 +33,12 @@ class OnBoardingActivity : AppCompatActivity() {
                     "Welcome to Oral Disease App, This app is designed to help you maintain your oral health easily. Let's get started!"
                 ),
                 OnBoardingItem(
-                    R.raw.animation4,
+                    R.raw.animation3,
                     "Get to Know the Features",
                     "Take a photo of your mouth for a quick oral health check. Get daily oral health tips."
                 ),
                 OnBoardingItem(
-                    R.raw.animation3,
+                    R.raw.animation1,
                     "Enjoy The App!",
                     "Ready to take care of your oral health? Start by selecting the features you want to use. Feel free to explore the app further!"
                 )

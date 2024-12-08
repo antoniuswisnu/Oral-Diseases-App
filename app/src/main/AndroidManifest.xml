@@ -26,6 +26,9 @@
         android:theme="@style/Theme.OralDiseasesApp"
         tools:targetApi="31">
         <activity
+            android:name=".doctors.DoctorsActivity"
+            android:exported="false" />
+        <activity
             android:name=".clinics.detail.DetailClinicActivity"
             android:exported="false" />
         <activity

@@ -217,6 +217,33 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/doctor"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/hospital"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Doctor"
+                android:fontFamily="@font/poppins_reguler"
+                android:textColor="#4A628A"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
                 android:id="@+id/vids"
                 android:layout_width="60dp"
                 android:layout_height="60dp"

@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -35,23 +36,22 @@ class ClinicActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
         clinicAdapter = ClinicAdapter(clinicList)
+
         binding.recyclerViewClinics.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewClinics.adapter = clinicAdapter
 
         clinicAdapter.onItemClick = { clinic ->
-            val intent = Intent(this, DetailClinicActivity::class.java)
-            intent.putExtra("PLACE_ID", clinic.placeId)
-            intent.putExtra("CLINIC_NAME", clinic.name)
-            intent.putExtra("CLINIC_ADDRESS", clinic.vicinity)
+            val intent = Intent(this, DetailClinicActivity::class.java).apply {
+                putExtra("PLACE_ID", clinic.placeId)
+                putExtra("CLINIC_NAME", clinic.name)
+                putExtra("CLINIC_ADDRESS", clinic.vicinity)
+            }
             startActivity(intent)
         }
 
-
         getCurrentLocation()
     }
-
 
     private fun getCurrentLocation() {
         if (ActivityCompat.checkSelfPermission(
@@ -80,7 +80,7 @@ class ClinicActivity : AppCompatActivity() {
                 }
             }
         } catch (e: SecurityException) {
-            Log.e(TAG, "Error: Izin lokasi tidak diberikan atau dicabut. ${e.message}")
+            Log.e(TAG, "Izin lokasi tidak diberikan: ${e.message}")
         }
     }
 
@@ -102,40 +102,29 @@ class ClinicActivity : AppCompatActivity() {
 
         val locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
-                for (location in locationResult.locations) {
+                val location = locationResult.lastLocation
+                if (location != null) {
                     val lat = location.latitude
                     val lng = location.longitude
                     Log.d(TAG, "Lokasi diperbarui: $lat, $lng")
-
-                    // Setelah lokasi diperbarui, kirim data lokasi ke DetailClinicActivity
-                    val intent = Intent(this@ClinicActivity, DetailClinicActivity::class.java)
-                    intent.putExtra("LATITUDE", lat)  // Latitude yang diperbarui
-                    intent.putExtra("LONGITUDE", lng)  // Longitude yang diperbarui
-                    startActivity(intent)
-
-                    // Memanggil fetchNearbyClinics (jika perlu)
                     fetchNearbyClinics(lat, lng)
+                } else {
+                    Log.e(TAG, "Lokasi tidak ditemukan.")
                 }
-
-                // Menghentikan pembaruan lokasi setelah mendapatkan satu lokasi
                 fusedLocationClient.removeLocationUpdates(this)
             }
         }
 
-
         try {
             fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, mainLooper)
         } catch (e: SecurityException) {
-            Log.e(TAG, "Error: ${e.message}")
+            Log.e(TAG, "Error meminta pembaruan lokasi: ${e.message}")
         }
     }
 
     private fun fetchNearbyClinics(latitude: Double, longitude: Double) {
-        val apiKey = "AIzaSyDWvTCGCS5ChiGue-zyl5CNnp_ospsfv_M"
-        val radius = 10000
-        val type = "dentist"
         val url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" +
-                "?location=$latitude,$longitude&radius=$radius&type=$type&key=$apiKey"
+                "?location=$latitude,$longitude&radius=5000&type=dentist&key=AIzaSyDWvTCGCS5ChiGue-zyl5CNnp_ospsfv_M"
 
         val client = OkHttpClient()
         val request = Request.Builder()
@@ -144,7 +133,10 @@ class ClinicActivity : AppCompatActivity() {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                Log.e(TAG, "Error fetching clinics: ${e.message}")
+                Log.e(TAG, "Gagal mengambil data klinik: ${e.message}")
+                runOnUiThread {
+                    Toast.makeText(this@ClinicActivity, "Gagal terhubung ke server", Toast.LENGTH_SHORT).show()
+                }
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -175,7 +167,10 @@ class ClinicActivity : AppCompatActivity() {
                         }
 
                     } catch (e: Exception) {
-                        Log.e(TAG, "Error parsing response: ${e.message}")
+                        Log.e(TAG, "Kesalahan parsing respons: ${e.message}")
+                        runOnUiThread {
+                            Toast.makeText(this@ClinicActivity, "Gagal memproses data", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }
@@ -195,3 +190,4 @@ class ClinicActivity : AppCompatActivity() {
         }
     }
 }
+

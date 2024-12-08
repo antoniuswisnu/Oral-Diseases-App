@@ -18,6 +18,7 @@ import com.example.oraldiseasesapp.chatbot.data.ChatBotActivity
 import com.example.oraldiseasesapp.clinics.ClinicActivity
 import com.example.oraldiseasesapp.data.DatabaseHelper
 import com.example.oraldiseasesapp.databinding.ActivityMainBinding
+import com.example.oraldiseasesapp.doctors.DoctorsActivity
 import com.example.oraldiseasesapp.login.LoginActivity
 import com.example.oraldiseasesapp.predict.PreviewActivity
 import com.example.oraldiseasesapp.profile.ProfileActivity
@@ -96,6 +97,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.cardTooth.setOnClickListener {
             val intent = Intent(this, ToothpasteActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.doctor.setOnClickListener{
+            val intent = Intent(this, DoctorsActivity::class.java)
             startActivity(intent)
         }
 

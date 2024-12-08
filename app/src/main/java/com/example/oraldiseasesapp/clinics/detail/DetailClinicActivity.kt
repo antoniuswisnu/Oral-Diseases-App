@@ -30,7 +30,7 @@ class DetailClinicActivity : AppCompatActivity() {
         binding = ActivityDetailClinicBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        latitude = intent.getDoubleExtra("LATITUDE", 0.0) // Ambil latitude
+        latitude = intent.getDoubleExtra("LATITUDE", 0.0)
         longitude = intent.getDoubleExtra("LONGITUDE", 0.0)
         val placeId = intent.getStringExtra("PLACE_ID")
         val name = intent.getStringExtra("CLINIC_NAME")
@@ -38,16 +38,13 @@ class DetailClinicActivity : AppCompatActivity() {
 
         setRandomClinicPhoto()
 
-        // Menampilkan data pada UI
         binding.tvClinicName.text = name
         binding.tvClinicAddress.text = address
 
-        // Ambil detail klinik dengan Google Places API
         placeId?.let {
             fetchClinicDetails(it)
         }
 
-        // Set listener untuk tombol buka di Google Maps
         binding.btnNavigate.setOnClickListener {
             openInGoogleMaps()
         }
@@ -67,7 +64,6 @@ class DetailClinicActivity : AppCompatActivity() {
     }
 
     private fun setRandomClinicPhoto() {
-        // Daftar ID gambar di drawable
         val photos = listOf(
             R.drawable.clinic1,
             R.drawable.clinic3,
@@ -75,10 +71,8 @@ class DetailClinicActivity : AppCompatActivity() {
             R.drawable.clinic6,
         )
 
-        // Pilih foto acak
         val randomPhotoId = photos[Random.nextInt(photos.size)]
 
-        // Tampilkan di ImageView
         binding.ivClinicPhoto.setImageResource(randomPhotoId)
     }
 
@@ -101,7 +95,16 @@ class DetailClinicActivity : AppCompatActivity() {
                         val jsonObject = JSONObject(responseData)
                         val result = jsonObject.getJSONObject("result")
 
-                        // Ambil data dari API
+                        val geometry = result.optJSONObject("geometry")
+                        val location = geometry?.optJSONObject("location")
+                        val lat = location?.optDouble("lat", 0.0) ?: 0.0
+                        val lng = location?.optDouble("lng", 0.0) ?: 0.0
+
+                        if (lat != 0.0 && lng != 0.0) {
+                            latitude = lat
+                            longitude = lng
+                        }
+
                         val photoReference = result.optJSONArray("photos")?.getJSONObject(0)?.getString("photo_reference")
                         val phoneNumber = result.optString("formatted_phone_number", "Tidak tersedia")
                         val website = result.optString("website", "Tidak tersedia")
@@ -116,9 +119,7 @@ class DetailClinicActivity : AppCompatActivity() {
                             }
                         }
 
-                        // Perbarui UI di thread utama
                         runOnUiThread {
-                            // Tampilkan foto klinik
                             photoReference?.let {
                                 val photoUrl = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=$it&key=$apiKey"
                                 Glide.with(this@DetailClinicActivity)
@@ -131,7 +132,6 @@ class DetailClinicActivity : AppCompatActivity() {
                             binding.tvClinicRating.text = "Rating: $rating"
                             binding.tvClinicHours.text = hoursText.toString()
 
-                            // Tampilkan website jika tersedia
                             if (website.isNotEmpty()) {
                                 binding.tvWebsite.apply {
                                     text = website
@@ -153,14 +153,10 @@ class DetailClinicActivity : AppCompatActivity() {
 
     private fun openInGoogleMaps() {
         if (latitude != 0.0 && longitude != 0.0) {
-            // Format URL untuk Google Maps
             val gmmIntentUri = Uri.parse("geo:$latitude,$longitude?q=$latitude,$longitude")
-
-            // Buat Intent untuk membuka Google Maps
             val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
             mapIntent.setPackage("com.google.android.apps.maps")
 
-            // Periksa apakah ada aplikasi Google Maps yang terinstal
             if (mapIntent.resolveActivity(packageManager) != null) {
                 startActivity(mapIntent)
             } else {
@@ -170,4 +166,5 @@ class DetailClinicActivity : AppCompatActivity() {
             Log.e(TAG, "Koordinat tidak tersedia.")
         }
     }
+
 }

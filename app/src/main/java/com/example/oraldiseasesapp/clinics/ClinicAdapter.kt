@@ -33,7 +33,6 @@ class ClinicAdapter(private val clinics: List<Clinic>) : RecyclerView.Adapter<Cl
             binding.tvVicinity.text = clinic.vicinity
             binding.tvOpeningStatus.text = clinic.openingStatus
 
-            // Set gambar acak untuk `hostpital_pict`
             val photos = listOf(
                 R.drawable.clinic1,
                 R.drawable.clinic3,

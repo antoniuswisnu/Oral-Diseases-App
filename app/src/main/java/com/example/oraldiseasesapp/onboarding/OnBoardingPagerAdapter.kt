@@ -32,7 +32,6 @@ class OnBoardingPagerAdapter(private val onBoardingItems: List<OnBoardingItem>) 
         fun setOnBoardingData(onBoardingItem: OnBoardingItem) {
             binding.textTitle.text = onBoardingItem.title
             binding.textDescription.text = onBoardingItem.description
-//            binding.animationView.setBackgroundResource(onBoardingItem.image)
             binding.animationView.setAnimation(onBoardingItem.image)
         }
 
