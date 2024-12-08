@@ -16,9 +16,9 @@ class InfoActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.apply {
-//            normal.setOnClickListener {
-//                startDetailActivity("Normal", "Description for Normal", R.drawable.normal, "Obat Normal", "Title Obat Normal", "Desc Obat Normal", "http://example.com/normal")
-//            }
+            normal.setOnClickListener {
+                startDetailActivity("Normal", "Description for Normal", R.drawable.normal, "Obat Normal", "Title Obat Normal", "Desc Obat Normal", "http://example.com/normal")
+            }
             caries.setOnClickListener {
                 startDetailActivity("Caries", "Description for Caries", R.drawable.caries, "Obat Caries", "Title Obat Caries", "Desc Obat Caries", "http://example.com/caries")
             }
