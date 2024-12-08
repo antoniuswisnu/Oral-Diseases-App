@@ -21,7 +21,7 @@ import androidx.core.net.toUri
 import com.example.oraldiseasesapp.camera.CameraActivity
 import com.example.oraldiseasesapp.camera.CameraActivity.Companion.CAMERAX_RESULT
 import com.example.oraldiseasesapp.databinding.ActivityPreviewBinding
-import com.example.oraldiseasesapp.ml.ModelNew
+import com.example.oraldiseasesapp.ml.ModelNew2
 import com.example.oraldiseasesapp.predict.result.PredictActivity
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.common.ops.NormalizeOp
@@ -138,7 +138,7 @@ class PreviewActivity : AppCompatActivity() {
     }
 
     private fun classifyImage(inputBuffer: ByteBuffer) {
-        val model = ModelNew.newInstance(applicationContext)
+        val model = ModelNew2.newInstance(applicationContext)
 
         val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 3, 299, 299), DataType.FLOAT32)
         inputFeature0.loadBuffer(inputBuffer)
@@ -147,8 +147,15 @@ class PreviewActivity : AppCompatActivity() {
         val outputFeature0 = outputs.outputFeature0AsTensorBuffer
         val confidenceArray = outputFeature0.floatArray
 
-        // Daftar label
-        val labels = arrayOf("Calculus", "Caries", "Gingivitis", "Ulcer", "Tooth Discoloration", "Hypodontia")
+        val labels = arrayOf(
+            "Calculus", // ca
+            "Tooth Discoloration", // td
+            "Healthy Teeth", // ht
+            "Caries", // car
+            "Ulcer", // ul
+            "Gingivitis", // gi
+            "Hypodontia" // hp
+        )
 
         val maxIndex = confidenceArray.indices.maxByOrNull { confidenceArray[it] } ?: -1
         val result = if (maxIndex >= 0) labels[maxIndex] else "Undetected wound"
