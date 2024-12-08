@@ -6,8 +6,10 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.oraldiseasesapp.chatbot.ChatBotActivity
+import com.example.oraldiseasesapp.clinics.ClinicActivity
 import com.example.oraldiseasesapp.data.DatabaseHelper
 import com.example.oraldiseasesapp.databinding.ActivityMainBinding
+import com.example.oraldiseasesapp.doctors.DoctorsActivity
 import com.example.oraldiseasesapp.news.ListNewsActivity
 import com.example.oraldiseasesapp.predict.PreviewActivity
 import com.example.oraldiseasesapp.profile.ProfileActivity
@@ -57,13 +59,14 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.cardMouth.setOnClickListener {
+        binding.btnScan.setOnClickListener {
             val intent = Intent(this, PreviewActivity::class.java)
             startActivity(intent)
         }
 
-        binding.pods.setOnClickListener {
-            Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show()
+        binding.clinics.setOnClickListener {
+            val intent = Intent(this, ClinicActivity::class.java)
+            startActivity(intent)
         }
 
         binding.stats.setOnClickListener {
@@ -76,6 +79,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.cardTooth.setOnClickListener {
             val intent = Intent(this, ToothpasteActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.doctors.setOnClickListener{
+            val intent = Intent(this, DoctorsActivity::class.java)
             startActivity(intent)
         }
 

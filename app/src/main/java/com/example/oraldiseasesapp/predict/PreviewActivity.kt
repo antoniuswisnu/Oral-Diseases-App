@@ -24,6 +24,7 @@ import com.example.oraldiseasesapp.camera.CameraActivity.Companion.CAMERAX_RESUL
 import com.example.oraldiseasesapp.data.AppDatabase
 import com.example.oraldiseasesapp.databinding.ActivityPreviewBinding
 import com.example.oraldiseasesapp.ml.ModelNew
+import com.example.oraldiseasesapp.ml.ModelNew2
 import com.example.oraldiseasesapp.report.Prediction
 import kotlinx.coroutines.launch
 import org.tensorflow.lite.DataType
@@ -156,7 +157,7 @@ class PreviewActivity : AppCompatActivity() {
     }
 
     private fun classifyImage(inputBuffer: ByteBuffer) {
-        val model = ModelNew.newInstance(applicationContext)
+        val model = ModelNew2.newInstance(applicationContext)
         Log.d("PreviewActivity", "Model loaded : $model")
 
         val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 3, 299, 299), DataType.FLOAT32)
@@ -170,7 +171,15 @@ class PreviewActivity : AppCompatActivity() {
         val confidenceArray = outputFeature0.floatArray.apply { softmax(this) }
         Log.d("PreviewActivity", "Confidence Array: ${confidenceArray.contentToString()}")
 
-        val labels = arrayOf("Calculus", "Caries", "Gingivitis", "Ulcer", "Tooth Discoloration", "Hypodontia")
+        val labels = arrayOf(
+            "Calculus", // ca
+            "Tooth Discoloration", // td
+            "Healthy Teeth", // ht
+            "Caries", // car
+            "Ulcer", // ul
+            "Gingivitis", // gi
+            "Hypodontia" // hp
+        )
 
         val maxIndex = confidenceArray.indices.maxByOrNull { confidenceArray[it] } ?: -1
         Log.d("PreviewActivity", "Max Index: $maxIndex")

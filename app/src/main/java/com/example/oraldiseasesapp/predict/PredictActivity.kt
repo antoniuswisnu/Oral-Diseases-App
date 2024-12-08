@@ -13,12 +13,13 @@ import com.example.oraldiseasesapp.databinding.ActivityPredictBinding
 class PredictActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPredictBinding
     private val listDesc = mapOf(
-        "Calculus" to "Kalkulus gigi adalah lapisan kotoran yang menempel dan mengeras pada permukaan gigi. Lapisan ini tidak bisa dibersihkan dengan cara disikat. Saat dipegang, kalkulus gigi terasa keras dan memiliki permukaan tidak rata layaknya karang. Karena itulah, kalkulus gigi juga kerap disebut dengan istilah karang gigi.",
-        "Caries" to "Karies gigi adalah masalah gigi berlubang, yaitu ketika gigi mengalami kerusakan serta pembusukan di bagian luar dan dalam. Kondisi ini merupakan permasalahan gigi yang dapat menyerang saraf, sering kali karies gigi disebabkan oleh aktivitas bakteri Streptococcus mutans di dalam mulut.",
-        "Gingivitis" to "Gingivitis adalah peradangan gusi yang disebabkan oleh penumpukan plak bakteri akibat kebersihan mulut yang buruk. Gejalanya meliputi gusi merah, bengkak, mudah berdarah saat menyikat gigi, serta bau mulut. Jika tidak ditangani, gingivitis bisa berkembang menjadi periodontitis, yang lebih serius dan dapat menyebabkan kerusakan jaringan pendukung gigi.",
-        "Ulcer" to "Ulcer dalam konteks kesehatan gigi merujuk pada ulser mulut atau sariawan, yang merupakan luka terbuka kecil di dalam mulut. Ulser ini biasanya berwarna putih atau kekuningan dengan pinggiran merah dan sering menyebabkan rasa sakit, terutama saat makan atau minum.",
-        "Tooth Discoloration" to "Tooth Discoloration adalah kondisi di mana warna gigi berubah dan tampak kuning, coklat, abu-abu, atau bahkan hitam. Penyebab utamanya termasuk kebiasaan merokok, konsumsi minuman berpigmen, serta kurangnya kebersihan mulut.",
-        "Hypodontia" to "Hypodontia adalah kondisi bawaan di mana seseorang memiliki jumlah gigi permanen yang kurang dari normal karena satu atau lebih gigi tidak berkembang. Ini sering terjadi pada gigi seri kedua atas atau gigi premolar kedua bawah."
+        "Calculus" to "Kalkulus gigi adalah lapisan kotoran yang mengeras pada permukaan gigi. Lapisan ini tidak bisa dibersihkan dengan cara disikat, hanya dapat dihilangkan dengan perawatan profesional.",
+        "Tooth Discoloration" to "Perubahan warna gigi yang sering disebabkan oleh konsumsi makanan berpigmen, minuman seperti kopi atau teh, kebiasaan merokok, atau kurangnya kebersihan mulut.",
+        "Healthy Teeth" to "Gigi sehat adalah kondisi ideal di mana gigi bersih, tidak berlubang, bebas dari plak, dan tidak mengalami kerusakan atau peradangan.",
+        "Caries" to "Karies adalah kerusakan gigi akibat bakteri yang menyebabkan gigi berlubang. Biasanya terjadi karena kebersihan mulut yang buruk atau konsumsi makanan tinggi gula.",
+        "Ulcer" to "Ulcer atau sariawan adalah luka terbuka kecil di dalam mulut yang sering menyebabkan rasa sakit, terutama saat makan atau minum. Ulser biasanya tidak serius dan dapat sembuh dalam beberapa hari.",
+        "Gingivitis" to "Gingivitis adalah peradangan gusi akibat penumpukan plak di sekitar gigi. Gejalanya meliputi gusi merah, bengkak, mudah berdarah, dan bau mulut.",
+        "Hypodontia" to "Hypodontia adalah kondisi di mana satu atau lebih gigi permanen tidak berkembang. Ini merupakan kelainan bawaan yang sering terjadi pada gigi seri atau premolar."
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -87,6 +87,8 @@
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:paddingBottom="30dp"
+            android:background="#E7F6FF"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -97,25 +99,28 @@
                 android:layout_margin="34dp"
                 android:layout_weight="1"
                 android:src="@drawable/mouth"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_mouth"
+                android:layout_marginTop="10dp"
+                android:id="@+id/tv_Mouth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
                 android:fontFamily="@font/poppins_bold"
-                android:text="Scan Your Mouth"
+                android:text="Get Benefit from our Mouth \nScan Feature!"
                 android:textColor="#4A628A"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/mouth"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.283" />
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@id/mouth"
+                app:layout_constraintStart_toStartOf="@id/mouth"
+                app:layout_constraintEnd_toEndOf="@id/mouth"
+                />
 
             <TextView
+                android:paddingHorizontal="18dp"
+                android:layout_marginTop="8dp"
                 android:id="@+id/tv_desc"
                 android:layout_marginRight="20dp"
                 android:layout_width="0dp"
@@ -125,10 +130,24 @@
                 android:text="You will get recommendation of your oral condition for your health and life."
                 android:textColor="#4A628A"
                 android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@id/tv_Mouth"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/mouth"
-                app:layout_constraintTop_toBottomOf="@id/tv_mouth"
+                android:textAlignment="center"
                 />
+
+            <Button
+                android:id="@+id/btn_scan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Scan Now"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_medium"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/bg_gradient_chat"
+                app:layout_constraintTop_toBottomOf="@id/tv_desc"
+                app:layout_constraintStart_toStartOf="@id/tv_desc"
+                app:layout_constraintEnd_toEndOf="@id/tv_desc"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
@@ -167,7 +186,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/pods"
+                android:id="@+id/clinics"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:src="@drawable/pods"
@@ -179,7 +198,34 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Podcast"
+                android:text="Clinics"
+                android:fontFamily="@font/poppins_reguler"
+                android:textColor="#4A628A"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/doctors"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/pods"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Doctors"
                 android:fontFamily="@font/poppins_reguler"
                 android:textColor="#4A628A"
                 />
