@@ -10,6 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.example.oraldiseasesapp.R
+import com.example.oraldiseasesapp.clinics.ClinicActivity
 import com.example.oraldiseasesapp.databinding.ActivityDetailClinicBinding
 import okhttp3.*
 import org.json.JSONArray
@@ -60,6 +61,11 @@ class DetailClinicActivity : AppCompatActivity() {
             } else {
                 Log.e(TAG, "Nomor telepon tidak tersedia.")
             }
+        }
+
+        binding.backButton.setOnClickListener {
+            startActivity(Intent(this, ClinicActivity::class.java))
+            finish()
         }
     }
 

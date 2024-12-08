@@ -1,13 +1,14 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:background="@color/white"
@@ -64,6 +65,8 @@
             android:layout_height="300dp"
             android:scaleType="centerCrop"
             android:id="@+id/newsDetailImage"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
             android:src="@drawable/tootpaste" />
 
         <TextView
@@ -71,14 +74,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:textColor="#000"/>
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/primary"/>
 
         <TextView
             android:id="@+id/articlesDetailContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="#555"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/primary"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
             android:paddingTop="8dp"/>
 
         <Button
@@ -86,7 +96,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Share"
-            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/primary"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="16dp" />
     </LinearLayout>
 </ScrollView>

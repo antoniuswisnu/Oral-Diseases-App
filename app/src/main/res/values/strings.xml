@@ -3,5 +3,5 @@
     <string name="default_web_client_id">tIstPDrOnwD7HVz813z0jvnjzfP0</string>
     <string name="register_text">Don’t Have Any Account?</string>
     <string name="clinic_photo">Foto Klinik</string>
-    <!--    <string name="feat">Introducing your personal oral health assistant. Our free app is here to guide you towards optimal oral health. With a range of features, from interactive brushing timers to expert-approved advice, we're committed to making your oral care journey effortless and effective.</string>-->
+    <string name="type_oral">Recognize The Types \n of Oral Diseases</string>
 </resources>

@@ -11,7 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.oraldiseasesapp.R
+import com.example.oraldiseasesapp.MainActivity
 import com.example.oraldiseasesapp.clinics.detail.DetailClinicActivity
 import com.example.oraldiseasesapp.databinding.ActivityClinicBinding
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -23,7 +23,6 @@ import okhttp3.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
-import kotlin.random.Random
 
 class ClinicActivity : AppCompatActivity() {
     private lateinit var binding: ActivityClinicBinding
@@ -37,6 +36,11 @@ class ClinicActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityClinicBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.backButton.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         clinicAdapter = ClinicAdapter(clinicList)

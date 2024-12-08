@@ -169,6 +169,8 @@ class PreviewActivity : AppCompatActivity() {
         val outputFeature0 = outputs.outputFeature0AsTensorBuffer
         Log.d("PreviewActivity", "Output Feature 0: $outputFeature0")
         val confidenceArray = outputFeature0.floatArray.apply { softmax(this) }
+
+//        val maxConfidenceArray = confidenceArray.maxOrNull() ?: 0.0f
         Log.d("PreviewActivity", "Confidence Array: ${confidenceArray.contentToString()}")
 
         val labels = arrayOf(
@@ -182,9 +184,16 @@ class PreviewActivity : AppCompatActivity() {
         )
 
         val maxIndex = confidenceArray.indices.maxByOrNull { confidenceArray[it] } ?: -1
+//        val sortIndex = confidenceArray.indices.sortedByDescending { confidenceArray[it] }
+//        Log.d("PreviewActivity", "Sorted Index: $sortIndex")
+
+//        val maxIndex = sortIndex
         Log.d("PreviewActivity", "Max Index: $maxIndex")
 
         val result = if (maxIndex >= 0) labels[maxIndex] else "Undetected wound"
+//        val result = labels[maxIndex[0]]
+//        val result = labels[maxIndex[maxIndex.size -1]]
+
         Log.d("PreviewActivity", "Predicted label result: $result")
 
         for (i in confidenceArray.indices) {

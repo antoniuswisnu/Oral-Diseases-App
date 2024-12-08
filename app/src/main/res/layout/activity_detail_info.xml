@@ -94,6 +94,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
             android:fontFamily="@font/poppins"
+            android:textAlignment="textStart"
             android:text="Discoloration is a condition where the color of the teeth changes. This condition can be caused by various factors, such as food, drinks, and smoking. Discoloration can also be a sign of certain diseases, such as tooth decay, gum disease, or oral cancer."
             android:textColor="@color/primary"
             android:textSize="16sp"
@@ -124,6 +125,7 @@
             android:layout_marginEnd="32dp"
             app:cardCornerRadius="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             app:cardElevation="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -131,17 +133,18 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingBottom="16dp">
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/iv_obat1"-->
-<!--                    android:layout_width="70dp"-->
-<!--                    android:layout_height="70dp"-->
-<!--                    android:layout_marginStart="8dp"-->
-<!--                    android:src="@drawable/chlorhexidine"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+                <ImageView
+                    android:id="@+id/iv_obat1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/chlorhexidine"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tv_obat_title1"

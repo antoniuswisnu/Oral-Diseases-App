@@ -1,8 +1,10 @@
 package com.example.oraldiseasesapp.doctors
 
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.oraldiseasesapp.databinding.ItemDoctorsBinding
 
@@ -15,6 +17,7 @@ class DoctorAdapter(private val doctorList: List<Doctor>) : RecyclerView.Adapter
         return DoctorViewHolder(binding)
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
     override fun onBindViewHolder(holder: DoctorViewHolder, position: Int) {
         val doctor = doctorList[position]
         with(holder.binding) {
@@ -25,7 +28,12 @@ class DoctorAdapter(private val doctorList: List<Doctor>) : RecyclerView.Adapter
             tvRating.text = doctor.rating
             profileDoctor.setImageResource(doctor.imageResId)
             btnChat.setOnClickListener {
-                Toast.makeText(holder.binding.root.context, "Coming soon", Toast.LENGTH_SHORT).show()
+                val phoneNumber = "62895326509445"
+                val message = "Halo, Apakah anda mempunyai waktu luang? saya ingin berkonsultasi mengenai kesehatan gigi dan mulut saya"
+
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse("http://api.whatsapp.com/send?phone=$phoneNumber&text=$message")
+                holder.itemView.context.startActivity(intent)
             }
         }
     }
