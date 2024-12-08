@@ -1,11 +1,13 @@
 package com.example.oraldiseasesapp.chatbot
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.oraldiseasesapp.MainActivity
 import com.example.oraldiseasesapp.databinding.ActivityChatBotBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -44,6 +46,11 @@ class ChatBotActivity : AppCompatActivity() {
             binding.etChatMessage.text.clear()
 //            binding.animationView.visibility = View.GONE
             callAPI(question)
+        }
+
+        binding.backButton.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
 
         hideSystemUI()

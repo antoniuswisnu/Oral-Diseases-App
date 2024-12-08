@@ -36,6 +36,7 @@ import java.nio.ByteBuffer
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.math.exp
 
 class PreviewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPreviewBinding
@@ -156,23 +157,29 @@ class PreviewActivity : AppCompatActivity() {
 
     private fun classifyImage(inputBuffer: ByteBuffer) {
         val model = ModelNew.newInstance(applicationContext)
+        Log.d("PreviewActivity", "Model loaded : $model")
 
         val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 3, 299, 299), DataType.FLOAT32)
         inputFeature0.loadBuffer(inputBuffer)
+        Log.d("PreviewActivity", "Input Feature 0: $inputFeature0")
 
         val outputs = model.process(inputFeature0)
+        Log.d("PreviewActivity", "Outputs: $outputs")
         val outputFeature0 = outputs.outputFeature0AsTensorBuffer
-        val confidenceArray = outputFeature0.floatArray
+        Log.d("PreviewActivity", "Output Feature 0: $outputFeature0")
+        val confidenceArray = outputFeature0.floatArray.apply { softmax(this) }
+        Log.d("PreviewActivity", "Confidence Array: ${confidenceArray.contentToString()}")
 
         val labels = arrayOf("Calculus", "Caries", "Gingivitis", "Ulcer", "Tooth Discoloration", "Hypodontia")
+
         val maxIndex = confidenceArray.indices.maxByOrNull { confidenceArray[it] } ?: -1
+        Log.d("PreviewActivity", "Max Index: $maxIndex")
+
         val result = if (maxIndex >= 0) labels[maxIndex] else "Undetected wound"
+        Log.d("PreviewActivity", "Predicted label result: $result")
 
-//        Toast.makeText(this, "Prediction: $result", Toast.LENGTH_LONG).show()
-
-        Log.d("Prediction Result", "Predicted label: $result")
         for (i in confidenceArray.indices) {
-            Log.d("Confidence Score", "Label: ${labels[i]}, Confidence: ${confidenceArray[i]}")
+            Log.d("PreviewActivity", "Label: ${labels[i]}, Confidence: ${confidenceArray[i]}")
         }
 
         val intent = Intent(this, PredictActivity::class.java)
@@ -197,11 +204,19 @@ class PreviewActivity : AppCompatActivity() {
             Toast.makeText(this@PreviewActivity, "Prediction saved to report", Toast.LENGTH_SHORT).show()
         }
 
-
         startActivity(intent)
 
         model.close()
         binding.progressIndicator.visibility = View.GONE
+    }
+
+    private fun softmax(arr: FloatArray) {
+        val max = arr.maxOrNull() ?: return
+        val exp = arr.map { exp((it - max).toDouble()) }
+        val sum = exp.sum()
+        for (i in arr.indices) {
+            arr[i] = (exp[i] / sum).toFloat()
+        }
     }
 
 }

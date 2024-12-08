@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".info.InfoActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="@color/white"
+            android:id="@+id/layout_topbar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            >
+
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="back"
+                android:src="@drawable/back"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_chatbot_cons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Kenali Penyakit Mulut"
+                android:textColor="@color/primary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:layout_marginHorizontal="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_chatbot_cons"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="18dp"
+                android:background="#CBCBF8" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Normal -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/normal"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_topbar">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/normal"
+                android:scaleType="centerCrop"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Normal"
+            android:textColor="@color/primary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/normal"
+            app:layout_constraintStart_toStartOf="@+id/normal"
+            app:layout_constraintTop_toBottomOf="@+id/normal" />
+
+        <!-- Caries -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/caries"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/normal"
+            app:layout_constraintTop_toBottomOf="@+id/layout_topbar">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/caries" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Caries"
+            android:textColor="@color/primary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/caries"
+            app:layout_constraintStart_toStartOf="@+id/caries"
+            app:layout_constraintTop_toBottomOf="@+id/caries" />
+
+        <!-- Gingivitis -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/gingivitis"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/gingivitis" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Gingivitis"
+            android:textColor="@color/primary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/gingivitis"
+            app:layout_constraintStart_toStartOf="@+id/gingivitis"
+            app:layout_constraintTop_toBottomOf="@+id/gingivitis" />
+
+        <!-- Hypodontia -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/hypodontia"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/hypodontia" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Hypodontia"
+            android:textColor="@color/primary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/hypodontia"
+            app:layout_constraintStart_toStartOf="@+id/hypodontia"
+            app:layout_constraintTop_toBottomOf="@+id/hypodontia" />
+
+        <!-- Calculus -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/calculus"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/calculus" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Calculus"
+            android:textColor="@color/primary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/calculus"
+            app:layout_constraintStart_toStartOf="@+id/calculus"
+            app:layout_constraintTop_toBottomOf="@+id/calculus" />
+
+        <!-- Ulcer -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/ulcer"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView8">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ulcer" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Ulcer"
+            android:textColor="@color/primary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/ulcer"
+            app:layout_constraintStart_toStartOf="@+id/ulcer"
+            app:layout_constraintTop_toBottomOf="@+id/ulcer" />
+
+        <!-- Discoloration -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/discoloration"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/discoloration" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Discoloration"
+            android:textColor="@color/primary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/discoloration"
+            app:layout_constraintStart_toStartOf="@+id/discoloration"
+            app:layout_constraintTop_toBottomOf="@+id/discoloration" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
