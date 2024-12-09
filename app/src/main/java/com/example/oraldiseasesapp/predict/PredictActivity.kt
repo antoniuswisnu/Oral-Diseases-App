@@ -44,12 +44,19 @@ class PredictActivity : AppCompatActivity() {
 
     }
 
-
     private fun displayPredictionResult() {
         val predictionResult = intent.getStringExtra("prediction_result") ?: "No result"
         val imageUriString = intent.getStringExtra("image_uri")
         val imageUri = imageUriString?.toUri()
+        val confidence = intent.getFloatExtra("confidence", 0f)
 
+        Log.d("Confidence", "Confidence Percentage: $confidence")  // Memastikan nilai sebelum format
+
+        binding.tvPercent.text = if (confidence > 0) {
+            "${"%.2f".format(confidence * 100)}%"
+        } else {
+            confidence.toString()
+        }
         binding.tvTitlePredict.text = "Diagnosis: $predictionResult"
         val description = listDesc[predictionResult] ?: "Deskripsi tidak tersedia untuk hasil ini."
         binding.tvDescPredict.text = description

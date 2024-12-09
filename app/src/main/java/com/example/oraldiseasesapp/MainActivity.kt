@@ -12,6 +12,7 @@ import com.example.oraldiseasesapp.doctors.DoctorsActivity
 import com.example.oraldiseasesapp.info.InfoActivity
 import com.example.oraldiseasesapp.news.ListNewsActivity
 import com.example.oraldiseasesapp.predict.PreviewActivity
+import com.example.oraldiseasesapp.predict.ScanActivity
 import com.example.oraldiseasesapp.profile.ProfileActivity
 import com.example.oraldiseasesapp.report.ReportActivity
 import com.example.oraldiseasesapp.video.ListVideoActivity
@@ -77,6 +78,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.doctors.setOnClickListener {
             startActivity(Intent(this, DoctorsActivity::class.java))
+        }
+
+        binding.btnScan.setOnClickListener {
+            startActivity(Intent(this, ScanActivity::class.java))
         }
 
     }

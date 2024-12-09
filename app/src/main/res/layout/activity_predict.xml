@@ -82,10 +82,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
-            android:text="Prediksi Kesehatan Mulut anda adalah 85%"
+            android:layout_marginStart="-32dp"
+            android:text="Prediksi Kesehatan Mulut anda adalah"
             android:textColor="@color/primary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+        <TextView
+            android:id="@+id/tv_percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:text="0.33"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/primary"
+            app:layout_constraintStart_toEndOf="@+id/tv_desc_predict2"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
         <TextView

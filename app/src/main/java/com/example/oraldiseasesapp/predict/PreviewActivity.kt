@@ -1,5 +1,5 @@
 package com.example.oraldiseasesapp.predict
-
+//
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -25,6 +25,8 @@ import com.example.oraldiseasesapp.data.AppDatabase
 import com.example.oraldiseasesapp.databinding.ActivityPreviewBinding
 import com.example.oraldiseasesapp.ml.ModelNew
 import com.example.oraldiseasesapp.ml.ModelNew2
+import com.example.oraldiseasesapp.ml.ModelNew3
+import com.example.oraldiseasesapp.ml.ModelNewBest
 import com.example.oraldiseasesapp.report.Prediction
 import kotlinx.coroutines.launch
 import org.tensorflow.lite.DataType
@@ -38,6 +40,110 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import kotlin.math.exp
+
+//class PreviewActivity : AppCompatActivity() {
+//    private lateinit var binding: ActivityPreviewBinding
+//    private var currentImageUri: Uri? = null
+//    private var bitmap: Bitmap? = null
+//
+//    private val classifierHelper by lazy {
+//        ImageClassifierHelper(
+//            context = this,
+//            modelName = "model_new_2.tflite",
+//            imageClassifierListener = object : ImageClassifierHelper.ClassifierListener {
+//                override fun onResults(
+//                    results: List<ImageClassifierHelper.ClassifierResult>,
+//                    inferenceTime: Long
+//                ) {
+//                    displayPrediction(results)
+//                }
+//
+//                override fun onError(error: String) {
+//                    Log.e("ClassifierHelper", "Error: $error")
+//                }
+//            }
+//        )
+//    }
+//
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        enableEdgeToEdge()
+//        binding = ActivityPreviewBinding.inflate(layoutInflater)
+//        setContentView(binding.root)
+//
+//        binding.galleryButton.setOnClickListener { startGallery() }
+////        binding.cameraXButton.setOnClickListener { startCameraX() }
+//        binding.predictButton.setOnClickListener { predictImage() }
+//    }
+//
+//    private fun startGallery() {
+//        launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+//    }
+//
+////    private fun startCameraX() {
+////        val intent = Intent(this, CameraActivity::class.java)
+////        launcherIntentCameraX.launch(intent)
+////    }
+//
+//    private val launcherGallery = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri: Uri? ->
+//        uri?.let {
+//            currentImageUri = it
+//            bitmap = uriToBitmap(it)
+//            showImage()
+//        } ?: Log.d("Photo Picker", "No media selected")
+//    }
+//
+//    private fun showImage() {
+//        currentImageUri?.let {
+//            binding.previewImageView.setImageURI(it)
+//            binding.progressIndicator.visibility = View.GONE
+//        }
+//    }
+//
+//    private fun uriToBitmap(uri: Uri): Bitmap? {
+//        return try {
+//            val originalBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+//                val source = ImageDecoder.createSource(contentResolver, uri)
+//                ImageDecoder.decodeBitmap(source)
+//            } else {
+//                @Suppress("DEPRECATION")
+//                MediaStore.Images.Media.getBitmap(contentResolver, uri)
+//            }
+//            originalBitmap.copy(Bitmap.Config.ARGB_8888, true)
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//            null
+//        }
+//    }
+//
+//    private fun predictImage() {
+//        bitmap?.let {
+//            binding.progressIndicator.visibility = View.VISIBLE
+//            classifierHelper.classify(it)
+//        } ?: Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()
+//    }
+//
+//    private fun displayPrediction(results: List<ImageClassifierHelper.ClassifierResult>) {
+//        binding.progressIndicator.visibility = View.GONE
+//        if (results.isNotEmpty()) {
+//            val topResult = results.first()
+//            val prediction = topResult.label
+//            val confidence = topResult.confidence
+//
+//            val intent = Intent(this, PredictActivity::class.java).apply {
+//                putExtra("prediction_result", prediction)
+//                putExtra("confidence", confidence)
+//                currentImageUri?.let { putExtra("image_uri", it.toString()) }
+//            }
+//
+//            startActivity(intent)
+//        } else {
+//            Toast.makeText(this, "No prediction results available", Toast.LENGTH_SHORT).show()
+//        }
+//    }
+//}
+
+
 
 class PreviewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPreviewBinding
@@ -145,8 +251,8 @@ class PreviewActivity : AppCompatActivity() {
 
     private fun preprocessImage(bitmap: Bitmap): TensorImage {
         val imageProcessor = ImageProcessor.Builder()
-            .add(ResizeOp(299, 299, ResizeOp.ResizeMethod.BILINEAR))
-            .add(NormalizeOp(0.0f, 255.0f))
+            .add(ResizeOp(299, 299, ResizeOp.ResizeMethod.NEAREST_NEIGHBOR))
+            .add(NormalizeOp(127.5f, 127.5f))
             .build()
 
         var tensorImage = TensorImage(DataType.FLOAT32)
@@ -157,18 +263,21 @@ class PreviewActivity : AppCompatActivity() {
     }
 
     private fun classifyImage(inputBuffer: ByteBuffer) {
-        val model = ModelNew2.newInstance(applicationContext)
+//        val model = "model_new_3.tflite"
+        val model = ModelNewBest.newInstance(applicationContext)
         Log.d("PreviewActivity", "Model loaded : $model")
 
-        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 3, 299, 299), DataType.FLOAT32)
+        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 299, 299, 3), DataType.FLOAT32)
         inputFeature0.loadBuffer(inputBuffer)
+
         Log.d("PreviewActivity", "Input Feature 0: $inputFeature0")
 
         val outputs = model.process(inputFeature0)
         Log.d("PreviewActivity", "Outputs: $outputs")
         val outputFeature0 = outputs.outputFeature0AsTensorBuffer
         Log.d("PreviewActivity", "Output Feature 0: $outputFeature0")
-        val confidenceArray = outputFeature0.floatArray.apply { softmax(this) }
+//        val confidenceArray = outputFeature0.floatArray.apply { softmax(this) }
+        val confidenceArray = outputFeature0.floatArray
 
 //        val maxConfidenceArray = confidenceArray.maxOrNull() ?: 0.0f
         Log.d("PreviewActivity", "Confidence Array: ${confidenceArray.contentToString()}")
@@ -202,6 +311,7 @@ class PreviewActivity : AppCompatActivity() {
 
         val intent = Intent(this, PredictActivity::class.java)
         intent.putExtra("prediction_result", result)
+        intent.putExtra("confidence", confidenceArray[maxIndex])
 
         currentImageUri?.let {
             intent.putExtra("image_uri", it.toString())
