@@ -13,7 +13,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.oraldiseasesapp.MainActivity
 import com.example.oraldiseasesapp.R
 import com.example.oraldiseasesapp.databinding.ActivityOnBoardingBinding
-import com.example.oraldiseasesapp.video.ListVideoActivity
 
 class OnBoardingActivity : AppCompatActivity() {
 
@@ -30,7 +29,7 @@ class OnBoardingActivity : AppCompatActivity() {
                 OnBoardingItem(
                     R.raw.animation1,
                     "Welcome",
-                    "Welcome to Oral Disease App, This app is designed to help you maintain your oral health easily. Let's get started!"
+                    "Welcome to Oral Health+ App, This app is designed to help you maintain your oral health easily. Let's get started!"
                 ),
                 OnBoardingItem(
                     R.raw.animation4,
